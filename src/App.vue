@@ -1,15 +1,21 @@
 <template>
   <v-app>
     <router-view></router-view>
-    <snackbar />
+    <success-message />
+    <error-message />
+    <loading-screen />
   </v-app>
 </template>
 
 <script>
-import snackbar from "@/components/global/snackbar";
+import SuccessMessage from "@/components/common/SuccessMessage";
+import ErrorMessage from "@/components/common/ErrorMessage";
+import LoadingScreen from "@/components/common/LoadingScreen";
 export default {
   components: {
-    snackbar
+    SuccessMessage,
+    ErrorMessage,
+    LoadingScreen
   }
 };
 </script>

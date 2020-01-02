@@ -38,9 +38,19 @@ export default {
           to: "statistics"
         },
         {
-          icon: "mdi-format-list-checks",
+          icon: "mdi-account-card-details",
           text: "Miembros",
           to: "members"
+        },
+        {
+          icon: "mdi-format-list-checks",
+          text: "Postulantes",
+          to: "postulants"
+        },
+        {
+          icon: "mdi-format-list-checks",
+          text: "test",
+          to: "test"
         }
       ]
     };

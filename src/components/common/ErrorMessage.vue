@@ -11,17 +11,17 @@ export default {
   computed: {
     snackbar: {
       get() {
-        return this.$store.state.successModule.showSuccessMessage;
+        return this.$store.state.errorModule.showErrorMessage;
       },
       set(newValue) {
-        this.$store.state.successModule.showSuccessMessage = newValue;
+        this.$store.state.errorModule.showErrorMessage = newValue;
       }
     },
     snackbarText() {
-      return this.$store.state.successModule.successMessage;
+      return this.$store.state.errorModule.errorMessage;
     },
     snackbarColor() {
-      return "success";
+      return "error";
     }
   }
 };

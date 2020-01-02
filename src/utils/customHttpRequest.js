@@ -1,4 +1,6 @@
-import store from "@/store";
+import {
+    store
+} from "@/store";
 
 const customHttpRequest = (type, url, params = null, callback = () => {}) => {
     axios[type](url, params)

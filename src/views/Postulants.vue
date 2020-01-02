@@ -8,19 +8,7 @@
         title="Listado de miembros"
         text="Tabla resumen de miembros de la logia"
       >
-        <v-select
-          dark
-          background-color="primary"
-          placeholder="Selecciona rango"
-          item-text="first_name"
-          dense
-          :items="$store.state.membersModule.members"
-          item-value="_id"
-          outlined
-        ></v-select>
         <v-data-table
-          :loading="dataTableLoading"
-          loading-text="Cargando datos"
           no-results-text="No se encontraron resultados"
           :search="search"
           hide-default-footer
@@ -33,11 +21,12 @@
         >
           <template v-slot:top>
             <v-container>
-              <span class="font-weight-bold">Filtrar por nombre: {{ search }}</span>
+              <span class="font-weight-bold"
+                >Filtrar por nombre: {{ search }}</span
+              >
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    clearable
                     dense
                     hide-details
                     v-model="search"
@@ -50,7 +39,9 @@
                 <v-col cols="12" sm="6">
                   <v-dialog v-model="dialog" max-width="900px">
                     <template v-slot:activator="{ on }">
-                      <v-btn color="info" dark class="mb-2" v-on="on">Agregar Miembro</v-btn>
+                      <v-btn color="info" dark class="mb-2" v-on="on"
+                        >Agregar Miembro</v-btn
+                      >
                     </template>
                     <v-card>
                       <v-card-title>
@@ -62,14 +53,20 @@
                           <v-col cols="12" sm="4">
                             <v-card>
                               <v-container fluid>
-                                <image-uploader :img="editedItem.profile_picture"></image-uploader>
+                                <image-uploader></image-uploader>
+                                <v-img
+                                  class="border-image center mb-3"
+                                  :src="editedItem.profile_picture"
+                                  lazy-src="/images/image-placeholder.png"
+                                  contain
+                                  max-width="200"
+                                  max-height="150"
+                                ></v-img>
                                 <b class="center">
                                   {{ editedItem.first_name }}
                                   {{ editedItem.last_name }}
                                 </b>
                                 <v-select
-                                  dark
-                                  background-color="primary"
                                   placeholder="Selecciona rango"
                                   item-text="name"
                                   dense
@@ -87,7 +84,9 @@
                                 <h3>Detalles del usuario</h3>
                                 <v-row dense>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Nombres</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Nombres
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -98,7 +97,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Apellidos</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Apellidos
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -109,7 +110,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">Correo</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Correo
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -120,7 +123,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Teléfono</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Teléfono
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -131,7 +136,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Celular</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Celular
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -142,7 +149,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">País</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      País
+                                    </p>
                                     <v-select
                                       placeholder="Selecciona rango"
                                       item-text="name"
@@ -154,7 +163,9 @@
                                     ></v-select>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Ciudad</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Ciudad
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -165,7 +176,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">Dirección</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Dirección
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -183,30 +196,50 @@
                       </v-container>
                       <v-card-actions>
                         <div class="flex-grow-1"></div>
-                        <v-btn outlined color="error" text @click="close">Cancelar</v-btn>
-                        <v-btn :loading="loadingButton" color="success" @click="save">Guardar</v-btn>
+                        <v-btn outlined color="error" text @click="close"
+                          >Cancelar</v-btn
+                        >
+                        <v-btn
+                          :loading="loadingButton"
+                          color="success"
+                          @click="save"
+                          >Guardar</v-btn
+                        >
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
                 </v-col>
               </v-row>
               <v-row justify="end">
-                <v-btn small color="info" class="mr-3" @click="exportPDF">Exportar a PDF</v-btn>
-                <v-btn small color="info" @click="exportExcel">Exportar a Excel</v-btn>
+                <v-btn small color="info" class="mr-3" @click="exportPDF"
+                  >Exportar a PDF</v-btn
+                >
+                <v-btn small color="info" @click="exportExcel"
+                  >Exportar a Excel</v-btn
+                >
               </v-row>
             </v-container>
           </template>
           <template v-slot:item.action="{ item }">
-            <v-btn class="mr-3 mb-1" small color="success" @click="editItem(item)">Editar</v-btn>
-            <v-btn small color="error" @click="deleteItem(item)">Eliminar</v-btn>
+            <v-btn class="mr-3" small color="success" @click="editItem(item)"
+              >Editar</v-btn
+            >
+            <v-btn small color="error" @click="deleteItem(item)"
+              >Eliminar</v-btn
+            >
           </template>
           <template v-slot:no-data>
-            <v-alert type="error" :value="true">Aún no cuentas con marcas de productos</v-alert>
+            <v-alert type="error" :value="true"
+              >Aún no cuentas con marcas de productos</v-alert
+            >
           </template>
-          <template v-slot:item.createdAt="{ item }">{{ item.createdAt | dateFormat }}</template>
+          <template v-slot:item.createdAt="{ item }">
+            {{ item.createdAt | dateFormat }}
+          </template>
           <template v-slot:item.profile_picture="{ item }">
             <v-img
               :src="item.profile_picture"
+              lazy-src="/images/image-placeholder.png"
               class="border-image"
               contain
               max-width="200"
@@ -250,51 +283,43 @@ export default {
     }
   },
   data: () => ({
-    members: [],
-    dataTableLoading: true,
     page: 1,
     pageCount: 0,
-    itemsPerPage: 5,
+    itemsPerPage: 10,
     loadingButton: false,
     validateError: false,
     search: "",
     dialog: false,
     headers: [
       {
-        text: "DNI",
+        text: "ID",
         align: "left",
         sortable: false,
-        value: "dni",
-        class: "customHeader"
+        value: "id"
       },
       {
         text: "Perfil",
         align: "left",
         sortable: false,
-        value: "profile_picture",
-        class: "customHeader"
+        value: "profile_picture"
       },
       {
         text: "Nombres",
         align: "left",
-        sortable: true,
-        value: "first_name",
-        class: "colored",
-        width: 150
+        sortable: false,
+        value: "first_name"
       },
       {
         text: "Apellidos",
         align: "left",
-        sortable: true,
-        value: "last_name",
-        width: 150
+        sortable: false,
+        value: "last_name"
       },
       {
         text: "Correo",
         align: "left",
         sortable: false,
-        value: "email",
-        class: "customHeader"
+        value: "email"
       },
       {
         text: "Celular",
@@ -331,11 +356,14 @@ export default {
     // members: [],
     editedIndex: -1,
     editedItem: {},
-    defaultItem: {}
+    defaultItem: customCopyObject(Member)
   }),
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "Nuevo miembro" : "Editar miembro";
+    },
+    members() {
+      return this.$store.state.membersModule.members;
     },
     ranks() {
       return this.$store.state.ranks;
@@ -354,10 +382,7 @@ export default {
   },
   methods: {
     async initialData() {
-      this.dataTableLoading = true;
-      await this.$store.dispatch("membersModule/fetchMembers");
-      this.members = customCopyObject(this.$store.state.membersModule.members);
-      this.dataTableLoading = false;
+      await this.$store.dispatch("getMembers");
     },
     exportExcel() {
       let data = XLSX.utils.json_to_sheet(this.members);
@@ -383,7 +408,6 @@ export default {
         columnStyles: { europe: { halign: "center" } }, // European countries centered
         body: this.members,
         columns: [
-          { header: "DNI", dataKey: "dni" },
           { header: "Nombres", dataKey: "first_name" },
           { header: "Apellidos", dataKey: "last_name" },
           { header: "Correo", dataKey: "email" },
@@ -397,19 +421,24 @@ export default {
       });
       doc.save("reporte_miembros_logia.pdf");
     },
+    validateForm() {
+      if (!this.editedItem.name) {
+        this.validateError = true;
+        return false;
+      }
+      this.validateError = false;
+      return true;
+    },
     editItem(item) {
       this.editedIndex = this.members.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-    async deleteItem(item) {
+    deleteItem(item) {
       const index = this.members.indexOf(item);
       let membersId = this.members[index]._id;
-      const confirm = await this.$confirm(
-        "¿Realmente deseas eliminar este registro?"
-      );
-      if (confirm) {
-        this.$store.dispatch("membersModule/deleteMember");
+      if (confirm("¿Seguro que deseas eliminar este elemento?")) {
+        customHttpRequest("delete", "/api/members/delete/" + membersId);
         this.members.splice(index, 1);
       }
     },
@@ -422,15 +451,7 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        //update member
         Object.assign(this.members[this.editedIndex], this.editedItem);
-        this.$store.dispatch("membersModule/editMember", {
-          id: this.members[this.editedIndex]._id,
-          data: this.editedItem
-        });
-        console.log("store es: ", this.$store.state.membersModule.members);
-        // console.log(this.$store.state.successModule.showSuccessMessage);
-        // this.$store.commit("showSuccess", "gaea", { module: "successModule" });
         this.close();
       } else {
         //create member
