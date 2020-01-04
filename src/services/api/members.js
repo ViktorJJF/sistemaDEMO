@@ -1,6 +1,5 @@
 export default {
   fetchMembers() {
-    console.log("se hara llamado a los members");
     return axios.get("/fake/members.json");
   },
   editMember(id, payload) {

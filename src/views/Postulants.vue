@@ -8,12 +8,24 @@
         title="Listado de miembros"
         text="Tabla resumen de miembros de la logia"
       >
+        <v-select
+          dark
+          background-color="primary"
+          placeholder="Selecciona rango"
+          item-text="first_name"
+          dense
+          :items="$store.state.postulantsModule.postulants"
+          item-value="_id"
+          outlined
+        ></v-select>
         <v-data-table
+          :loading="dataTableLoading"
+          loading-text="Cargando datos"
           no-results-text="No se encontraron resultados"
           :search="search"
           hide-default-footer
           :headers="headers"
-          :items="members"
+          :items="postulants"
           sort-by="calories"
           @page-count="pageCount = $event"
           :page.sync="page"
@@ -21,17 +33,16 @@
         >
           <template v-slot:top>
             <v-container>
-              <span class="font-weight-bold"
-                >Filtrar por nombre: {{ search }}</span
-              >
+              <span class="font-weight-bold">Filtrar por nombre: {{ search }}</span>
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
+                    clearable
                     dense
                     hide-details
                     v-model="search"
                     append-icon="mdi-magnify"
-                    placeholder="Escribe el nombre a buscar"
+                    placeholder="Escribe el nombre del postulante a buscar"
                     single-line
                     outlined
                   ></v-text-field>
@@ -39,9 +50,13 @@
                 <v-col cols="12" sm="6">
                   <v-dialog v-model="dialog" max-width="900px">
                     <template v-slot:activator="{ on }">
-                      <v-btn color="info" dark class="mb-2" v-on="on"
-                        >Agregar Miembro</v-btn
-                      >
+                      <v-btn
+                        color="info"
+                        dark
+                        class="mb-2 text-none"
+                        v-on="on"
+                        @click="editedItem.rank='Postulante'"
+                      >Agregar Postulante</v-btn>
                     </template>
                     <v-card>
                       <v-card-title>
@@ -53,20 +68,15 @@
                           <v-col cols="12" sm="4">
                             <v-card>
                               <v-container fluid>
-                                <image-uploader></image-uploader>
-                                <v-img
-                                  class="border-image center mb-3"
-                                  :src="editedItem.profile_picture"
-                                  lazy-src="/images/image-placeholder.png"
-                                  contain
-                                  max-width="200"
-                                  max-height="150"
-                                ></v-img>
+                                <image-uploader :img="editedItem.profile_picture"></image-uploader>
                                 <b class="center">
                                   {{ editedItem.first_name }}
                                   {{ editedItem.last_name }}
                                 </b>
                                 <v-select
+                                  disabled
+                                  dark
+                                  background-color="primary"
                                   placeholder="Selecciona rango"
                                   item-text="name"
                                   dense
@@ -84,9 +94,7 @@
                                 <h3>Detalles del usuario</h3>
                                 <v-row dense>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Nombres
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">Nombres</p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -97,9 +105,7 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Apellidos
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">Apellidos</p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -110,9 +116,7 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Correo
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">Correo</p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -123,9 +127,7 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Teléfono
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">Teléfono</p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -136,9 +138,7 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Celular
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">Celular</p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -149,9 +149,7 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      País
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">País</p>
                                     <v-select
                                       placeholder="Selecciona rango"
                                       item-text="name"
@@ -163,9 +161,7 @@
                                     ></v-select>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Ciudad
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">Ciudad</p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -176,9 +172,7 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Dirección
-                                    </p>
+                                    <p class="body-1 font-weight-bold mb-0">Dirección</p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -193,53 +187,39 @@
                             </v-card>
                           </v-col>
                         </v-row>
+                        <postulant-info :id="editedItem._id" :key="componentKey"></postulant-info>
                       </v-container>
                       <v-card-actions>
                         <div class="flex-grow-1"></div>
-                        <v-btn outlined color="error" text @click="close"
-                          >Cancelar</v-btn
-                        >
-                        <v-btn
-                          :loading="loadingButton"
-                          color="success"
-                          @click="save"
-                          >Guardar</v-btn
-                        >
+                        <v-btn outlined color="error" text @click="close">Cancelar</v-btn>
+                        <v-btn :loading="loadingButton" color="success" @click="save">Guardar</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
                 </v-col>
               </v-row>
               <v-row justify="end">
-                <v-btn small color="info" class="mr-3" @click="exportPDF"
-                  >Exportar a PDF</v-btn
-                >
-                <v-btn small color="info" @click="exportExcel"
-                  >Exportar a Excel</v-btn
-                >
+                <v-btn small color="info" class="mr-3" @click="exportPDF">Exportar a PDF</v-btn>
+                <v-btn small color="info" @click="exportExcel">Exportar a Excel</v-btn>
               </v-row>
             </v-container>
           </template>
           <template v-slot:item.action="{ item }">
-            <v-btn class="mr-3" small color="success" @click="editItem(item)"
-              >Editar</v-btn
-            >
-            <v-btn small color="error" @click="deleteItem(item)"
-              >Eliminar</v-btn
-            >
+            <v-btn
+              class="mr-3 mb-1 text-none"
+              small
+              color="success"
+              @click="editItem(item);forceRerender();"
+            >Editar</v-btn>
+            <v-btn class="text-none" small color="error" @click="deleteItem(item)">Eliminar</v-btn>
           </template>
           <template v-slot:no-data>
-            <v-alert type="error" :value="true"
-              >Aún no cuentas con marcas de productos</v-alert
-            >
+            <v-alert type="error" :value="true">Aún no cuentas con marcas de productos</v-alert>
           </template>
-          <template v-slot:item.createdAt="{ item }">
-            {{ item.createdAt | dateFormat }}
-          </template>
+          <template v-slot:item.createdAt="{ item }">{{ item.createdAt | dateFormat }}</template>
           <template v-slot:item.profile_picture="{ item }">
             <v-img
               :src="item.profile_picture"
-              lazy-src="/images/image-placeholder.png"
               class="border-image"
               contain
               max-width="200"
@@ -250,7 +230,7 @@
         <v-col cols="12" sm="12">
           <span>
             <strong>Total de miembros:</strong>
-            {{ members.length }}
+            {{ postulants.length }}
           </span>
         </v-col>
         <div class="text-center pt-2">
@@ -263,7 +243,6 @@
 
 <script>
 import dateFormat from "@/utils/customDate";
-import Member from "@/classes/Member.js";
 import { customCopyObject } from "@/utils/customCopyObject";
 import { customHttpRequest } from "@/utils/customHttpRequest";
 import MaterialCard from "@/components/global/MaterialCard";
@@ -271,9 +250,11 @@ import XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ImageUploader from "@/components/common/ImageUploader";
+import PostulantInfo from "@/components/PostulantInfo";
 
 export default {
   components: {
+    PostulantInfo,
     MaterialCard,
     ImageUploader
   },
@@ -283,43 +264,51 @@ export default {
     }
   },
   data: () => ({
+    componentKey: 0,
+    dataTableLoading: true,
     page: 1,
     pageCount: 0,
-    itemsPerPage: 10,
+    itemsPerPage: 5,
     loadingButton: false,
     validateError: false,
     search: "",
     dialog: false,
     headers: [
       {
-        text: "ID",
+        text: "DNI",
         align: "left",
         sortable: false,
-        value: "id"
+        value: "dni",
+        class: "customHeader"
       },
       {
         text: "Perfil",
         align: "left",
         sortable: false,
-        value: "profile_picture"
+        value: "profile_picture",
+        class: "customHeader"
       },
       {
         text: "Nombres",
         align: "left",
-        sortable: false,
-        value: "first_name"
+        sortable: true,
+        value: "first_name",
+        class: "colored",
+        width: 150
       },
       {
         text: "Apellidos",
         align: "left",
-        sortable: false,
-        value: "last_name"
+        sortable: true,
+        value: "last_name",
+        width: 150
       },
       {
         text: "Correo",
         align: "left",
         sortable: false,
-        value: "email"
+        value: "email",
+        class: "customHeader"
       },
       {
         text: "Celular",
@@ -353,23 +342,23 @@ export default {
       },
       { text: "Acciones", value: "action", sortable: false }
     ],
-    // members: [],
+    // postulants: [],
     editedIndex: -1,
     editedItem: {},
-    defaultItem: customCopyObject(Member)
+    defaultItem: {}
   }),
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "Nuevo miembro" : "Editar miembro";
-    },
-    members() {
-      return this.$store.state.membersModule.members;
     },
     ranks() {
       return this.$store.state.ranks;
     },
     countries() {
       return this.$store.state.countries;
+    },
+    postulants() {
+      return this.$store.state.postulantsModule.postulants;
     }
   },
   watch: {
@@ -382,10 +371,15 @@ export default {
   },
   methods: {
     async initialData() {
-      await this.$store.dispatch("getMembers");
+      this.dataTableLoading = true;
+      await this.$store.dispatch("postulantsModule/fetchPostulants");
+      this.dataTableLoading = false;
+    },
+    forceRerender() {
+      this.componentKey += 1;
     },
     exportExcel() {
-      let data = XLSX.utils.json_to_sheet(this.members);
+      let data = XLSX.utils.json_to_sheet(this.postulants);
       const workbook = XLSX.utils.book_new();
       const filename = "miembros-logia";
       XLSX.utils.book_append_sheet(workbook, data, filename);
@@ -406,8 +400,9 @@ export default {
         headStyles: { fillColor: [25, 53, 93] },
         styles: { fontSize: 9 },
         columnStyles: { europe: { halign: "center" } }, // European countries centered
-        body: this.members,
+        body: this.postulants,
         columns: [
+          { header: "DNI", dataKey: "dni" },
           { header: "Nombres", dataKey: "first_name" },
           { header: "Apellidos", dataKey: "last_name" },
           { header: "Correo", dataKey: "email" },
@@ -421,25 +416,20 @@ export default {
       });
       doc.save("reporte_miembros_logia.pdf");
     },
-    validateForm() {
-      if (!this.editedItem.name) {
-        this.validateError = true;
-        return false;
-      }
-      this.validateError = false;
-      return true;
-    },
     editItem(item) {
-      this.editedIndex = this.members.indexOf(item);
+      this.editedIndex = this.postulants.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-    deleteItem(item) {
-      const index = this.members.indexOf(item);
-      let membersId = this.members[index]._id;
-      if (confirm("¿Seguro que deseas eliminar este elemento?")) {
-        customHttpRequest("delete", "/api/members/delete/" + membersId);
-        this.members.splice(index, 1);
+    async deleteItem(item) {
+      const index = this.postulants.indexOf(item);
+      let postulantsId = this.postulants[index]._id;
+      const confirm = await this.$confirm(
+        "¿Realmente deseas eliminar este registro?"
+      );
+      if (confirm) {
+        this.$store.dispatch("postulantsModule/deletePostulant");
+        this.postulants.splice(index, 1);
       }
     },
     close() {
@@ -451,11 +441,15 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.members[this.editedIndex], this.editedItem);
+        //update postulant
+        this.$store.dispatch("postulantsModule/editPostulant", {
+          id: this.postulants[this.editedIndex]._id,
+          data: this.editedItem
+        });
         this.close();
       } else {
-        //create member
-        this.members.push(this.editedItem);
+        //create postulant
+        this.postulants.push(this.editedItem);
         this.close();
       }
     }

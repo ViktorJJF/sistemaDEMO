@@ -50,7 +50,7 @@
                 <v-col cols="12" sm="6">
                   <v-dialog v-model="dialog" max-width="900px">
                     <template v-slot:activator="{ on }">
-                      <v-btn color="info" dark class="mb-2" v-on="on">Agregar Miembro</v-btn>
+                      <v-btn color="info" dark class="mb-2 text-none" v-on="on">Agregar Miembro</v-btn>
                     </template>
                     <v-card>
                       <v-card-title>
@@ -197,8 +197,8 @@
             </v-container>
           </template>
           <template v-slot:item.action="{ item }">
-            <v-btn class="mr-3 mb-1" small color="success" @click="editItem(item)">Editar</v-btn>
-            <v-btn small color="error" @click="deleteItem(item)">Eliminar</v-btn>
+            <v-btn class="mr-3 mb-1 text-none" small color="success" @click="editItem(item)">Editar</v-btn>
+            <v-btn class="text-none" small color="error" @click="deleteItem(item)">Eliminar</v-btn>
           </template>
           <template v-slot:no-data>
             <v-alert type="error" :value="true">Aún no cuentas con marcas de productos</v-alert>
@@ -250,7 +250,6 @@ export default {
     }
   },
   data: () => ({
-    members: [],
     dataTableLoading: true,
     page: 1,
     pageCount: 0,
@@ -342,6 +341,9 @@ export default {
     },
     countries() {
       return this.$store.state.countries;
+    },
+    members() {
+      return this.$store.state.membersModule.members;
     }
   },
   watch: {
@@ -356,7 +358,6 @@ export default {
     async initialData() {
       this.dataTableLoading = true;
       await this.$store.dispatch("membersModule/fetchMembers");
-      this.members = customCopyObject(this.$store.state.membersModule.members);
       this.dataTableLoading = false;
     },
     exportExcel() {
@@ -423,14 +424,10 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         //update member
-        Object.assign(this.members[this.editedIndex], this.editedItem);
         this.$store.dispatch("membersModule/editMember", {
           id: this.members[this.editedIndex]._id,
           data: this.editedItem
         });
-        console.log("store es: ", this.$store.state.membersModule.members);
-        // console.log(this.$store.state.successModule.showSuccessMessage);
-        // this.$store.commit("showSuccess", "gaea", { module: "successModule" });
         this.close();
       } else {
         //create member

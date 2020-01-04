@@ -18,6 +18,7 @@ Vue.use(VuetifyConfirm, {
 });
 //other plugins
 import "@/plugins/veevalidate";
+import "@/plugins/vue-chartist";
 import "./bootstrap.js";
 import "@/assets/scss/myStyles.scss";
 

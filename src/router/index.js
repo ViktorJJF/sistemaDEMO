@@ -18,7 +18,7 @@ let routes = [
       {
         path: "/estadisticas",
         name: "statistics",
-        component: require("@/views/statistics").default
+        component: require("@/views/Statistics").default
       },
       {
         path: "/miembros",
@@ -29,6 +29,21 @@ let routes = [
         path: "/postulantes",
         name: "postulants",
         component: require("@/views/Postulants").default
+      },
+      {
+        path: "/control-de-pagos",
+        name: "paymentsControl",
+        component: require("@/views/PaymentsControl").default
+      },
+      {
+        path: "/control-de-asistencias",
+        name: "assistancesControl",
+        component: require("@/views/AssistancesControl").default
+      },
+      {
+        path: "/perfil-de-logia",
+        name: "logiaProfile",
+        component: require("@/views/LogiaProfile").default
       },
       {
         path: "/test",

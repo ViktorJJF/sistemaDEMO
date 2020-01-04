@@ -39,6 +39,11 @@ export default {
         },
         {
           icon: "mdi-account-card-details",
+          text: "Perfil de Logia",
+          to: "logiaProfile"
+        },
+        {
+          icon: "mdi-account-card-details",
           text: "Miembros",
           to: "members"
         },
@@ -46,6 +51,16 @@ export default {
           icon: "mdi-format-list-checks",
           text: "Postulantes",
           to: "postulants"
+        },
+        {
+          icon: "mdi-format-list-checks",
+          text: "Control de pagos",
+          to: "paymentsControl"
+        },
+        {
+          icon: "mdi-format-list-checks",
+          text: "Control de Asistencias",
+          to: "assistancesControl"
         },
         {
           icon: "mdi-format-list-checks",
