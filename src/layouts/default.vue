@@ -3,6 +3,7 @@
     <toolbar />
     <drawer />
     <v-content>
+      componente: {{$store.state.componentKey}}
       <v-fade-transition mode="out-in">
         <router-view></router-view>
       </v-fade-transition>
@@ -19,14 +20,24 @@ export default {
     Toolbar
   },
   data() {
-    return {};
+    return {
+      componentKey: 0
+    };
   },
   props: {
     source: String
   },
-  data: () => ({}),
-  mounted() {},
-  methods: {}
+  mounted() {
+    this.initialData();
+  },
+  methods: {
+    async initialData() {
+      // this.dataTableLoading = true;
+      await this.$store.dispatch("logiaModule/fetchLogia");
+      console.log("se monto app2");
+      this.$vuetify.theme.themes.light.primary = this.$store.state.logiaModule.logia.color;
+    }
+  }
 };
 </script>
 

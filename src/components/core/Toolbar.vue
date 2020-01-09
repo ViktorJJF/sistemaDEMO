@@ -1,17 +1,18 @@
 <template>
-  <v-app-bar dark app color="primary">
+  <v-app-bar dark app :color="$store.state.logiaModule.logia.color">
     <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-    <span class="title ml-3 mr-5">
-      Logia Masonica Francisco de Paula Gonzales Vigil</span
-    >
+    <v-toolbar-title>{{logiaName}}</v-toolbar-title>
+    <!-- <span class="title ml-3 mr-5"></span> -->
     <v-spacer></v-spacer>
     <v-menu v-if="$store.state.user" offset-y>
       <template v-slot:activator="{ on }">
         <v-btn icon v-on="on">
           <v-badge color="red" @click>
-            <template v-slot:badge>{{
+            <template v-slot:badge>
+              {{
               $store.state.stockAlert.length
-            }}</template>
+              }}
+            </template>
             <v-icon>mdi-email</v-icon>
           </v-badge>
         </v-btn>
@@ -24,13 +25,13 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-btn v-if="!$store.state.user" dark outlined :to="{ name: 'login' }"
+    <!-- <v-btn v-if="!$store.state.user" dark outlined :to="{ name: 'login' }"
       >Iniciar Sesión</v-btn
-    >
-    <v-menu v-if="$store.state.user" offset-y>
+    >-->
+    <v-menu offset-y>
       <template v-slot:activator="{ on }">
         <v-btn text color="white" dark v-on="on">
-          {{ user }}
+          logia@gmail.com
           <v-icon>mdi-menu-down</v-icon>
         </v-btn>
       </template>
@@ -56,6 +57,12 @@ export default {
     },
     user() {
       return this.$store.state.user.email;
+    },
+    logiaName() {
+      return this.$store.getters["logiaModule/logiaFullName"];
+    },
+    logiaColor() {
+      return this.$store.state.logiaModule.logia.color;
     }
   },
   methods: {

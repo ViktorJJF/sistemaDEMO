@@ -46,6 +46,16 @@ let routes = [
         component: require("@/views/LogiaProfile").default
       },
       {
+        path: "/personalizacion",
+        name: "personalization",
+        component: require("@/views/Personalization").default
+      },
+      {
+        path: "/suscripcion",
+        name: "suscription",
+        component: require("@/views/Suscription").default
+      },
+      {
         path: "/test",
         name: "test",
         component: require("@/views/Test").default

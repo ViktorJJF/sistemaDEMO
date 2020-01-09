@@ -1,23 +1,22 @@
 import * as types from "@/store/mutation-types";
-import api from "@/services/api/members.js";
+import api from "@/services/api/logia.js";
 import { buildSuccess, handleError } from "@/utils/utils.js";
 
 const module = {
   namespaced: true,
   state: {
-    members: [],
-    totalMembers: 0
+    logia: {}
   },
   actions: {
-    fetchMembers({ commit, state }) {
+    fetchLogia({ commit, state }) {
       return new Promise((resolve, reject) => {
-        if (state.members.length > 0) resolve();
+        if (state.logia.hasOwnProperty("name")) resolve();
         else {
           api
-            .fetchMembers()
+            .fetchLogia()
             .then(response => {
               // commit(types.TOTAL_USERS, response.data.totalDocs)
-              commit("fetchMembers", response.data);
+              commit("fetchLogia", response.data);
               resolve();
             })
             .catch(error => {
@@ -27,14 +26,14 @@ const module = {
         }
       });
     },
-    editMember({ commit }, { id, data }) {
+    updateLogia({ commit }, { id, data }) {
       // return new Promise((resolve, reject) => {
       //   // const data = {
       //   //   // type your data to update
       //   // };
       //   //type your id and data
       //   // api
-      //   //   .editMember(payload._id, data)
+      //   //   .editLogia(payload._id, data)
       //   //   .then(response => {
       //   //     if (response.status === 200) {
 
@@ -48,36 +47,32 @@ const module = {
       //   console.log("se hara commit a: ", id, data);
       //   resolve();
       // });
-      commit("editMember", { id, data });
+      commit("editLogia", { id, data });
     },
-    deleteMember({ commit }, id) {
+    deleteLogia({ commit }, id) {
       return new Promise((resolve, reject) => {
         buildSuccess("Eliminado con éxito", commit, resolve);
       });
     }
   },
   mutations: {
-    fetchMembers(state, members) {
-      state.members = members;
+    fetchLogia(state, logia) {
+      state.logia = logia;
     },
-    editMember(state, { id, data }) {
-      let indexToUpdate = state.members.findIndex(member => member._id == id);
-      console.log(
-        "se modificara: ",
-        state.members[indexToUpdate],
-        " con : ",
-        data
-      );
-      state.members.splice(indexToUpdate, 1, { ...data });
-      console.log("ahora state es: ", state.members);
+    updateLogia(state, data) {
+      console.log("se hara commit");
+      state.logia.name = data.name;
+      state.logia.number = data.number;
+      state.logia.profile_picture = data.profile_picture;
+      state.logia.color = data.color;
     },
     [types.TOTAL_MEMBERS](state, value) {
-      state.totalMembers = value;
+      state.totalLogia = value;
     }
   },
   getters: {
-    getTotalMembers(state) {
-      return state.members.length;
+    logiaFullName(state) {
+      return state.logia.name + " " + state.logia.number;
     }
   }
 };

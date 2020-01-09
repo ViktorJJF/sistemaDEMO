@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
     token: localStorage.getItem("token") || "",
     user: null,
     users: [],
+    componentKey: 0,
     toolbar: {
       drawerIcon: null
     },

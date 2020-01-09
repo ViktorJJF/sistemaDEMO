@@ -1,9 +1,9 @@
 <template>
-  <v-card :width="width" class="text mx-3" :style="styles" v-bind="$attrs" v-on="$listeners">
+  <v-card :width="width" class="text" :style="styles" v-bind="$attrs" v-on="$listeners">
     <helper-offset v-if="hasOffset" :inline="inline" :full-width="fullWidth" :offset="offset">
       <v-card
         v-if="!$slots.offset"
-        :color="$store.state.logiaModule.logia.color"
+        :color="color"
         :elevation="elevation"
         class="v-card--material__header d-flex align-center"
         dark
@@ -12,8 +12,8 @@
         <slot v-if="!title && !text" name="header" />
         <div v-else class="px-3">
           <h4 class="headline font-weight-light mb-2">
-            <v-icon>{{ icon }}</v-icon>
-            {{ title }}
+            <v-icon>{{icon}}</v-icon>
+            {{title}}
           </h4>
           <p class="category font-weight-thin mb-0" v-text="text" />
         </div>
@@ -22,9 +22,9 @@
       <slot v-else name="offset" />
     </helper-offset>
 
-    <v-container fluid>
+    <v-card-text>
       <slot />
-    </v-container>
+    </v-card-text>
 
     <v-divider v-if="$slots.actions" class="mx-3" />
 
@@ -35,12 +35,12 @@
 </template>
 
 <script>
-import Offset from "@/components/helper/Offset";
+import HelperOffset from "@/components/helper/Offset";
 export default {
-  name: "MaterialCard",
   components: {
-    helperOffset: Offset
+    HelperOffset
   },
+  name: "MaterialCard",
   inheritAttrs: false,
   props: {
     width: {
