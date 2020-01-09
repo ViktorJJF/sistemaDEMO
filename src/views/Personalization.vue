@@ -13,7 +13,13 @@
             <p class="body-1 font-weight-bold mb-0">Nombre de la logia:</p>
           </v-col>
           <v-col cols="12" sm="9">
-            <v-text-field hide-details dense outlined v-model="logia.name"></v-text-field>
+            <v-text-field
+              :rules="[v => !!v || 'Email is required']"
+              dense
+              outlined
+              v-model="logia.name"
+              required
+            ></v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
             <p class="body-1 font-weight-bold mb-0">Identificador:</p>
@@ -66,7 +72,7 @@ export default {
   methods: {
     async initialData() {
       await this.$store.dispatch("logiaModule/fetchLogia");
-      this.logia = this.$store.state.logiaModule.logia;
+      this.logia = this.$deepCopy(this.$store.state.logiaModule.logia);
     },
     updateLogia() {
       this.$store.commit("logiaModule/updateLogia", this.logia);

@@ -3,7 +3,6 @@
     <toolbar />
     <drawer />
     <v-content>
-      componente: {{$store.state.componentKey}}
       <v-fade-transition mode="out-in">
         <router-view></router-view>
       </v-fade-transition>

@@ -143,10 +143,11 @@ export default {
   methods: {
     selectItem(i) {
       this.selectedItem = i;
+      this.selectedItemExpansive = -1;
     },
     selectItemExansive(i) {
       this.selectedItemExpansive = i;
-      console.log("se selecciono: ", i);
+      this.selectedItem = -1;
     }
   }
 };
