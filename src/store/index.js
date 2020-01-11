@@ -13,29 +13,36 @@ export const store = new Vuex.Store({
       drawerIcon: null
     },
     //new data
-    ranks: [
-      {
-        id: 1,
-        name: "Postulante"
-      },
+    ranks: [,
       {
         id: 2,
-        name: "Aprendiz Masón"
+        name: "Aprendiz"
       },
       {
         id: 3,
-        name: "Compañero Masón"
+        name: "Compañero"
       },
       {
         id: 4,
-        name: "Maestro Masón"
+        name: "Maestro"
       }
     ],
-    countries: [
-      { id: 1, name: "Perú" },
-      { id: 2, name: "Colombia" },
-      { id: 3, name: "Chile" },
-      { id: 4, name: "Bolivia" }
+    countries: [{
+        id: 1,
+        name: "Perú"
+      },
+      {
+        id: 2,
+        name: "Colombia"
+      },
+      {
+        id: 3,
+        name: "Chile"
+      },
+      {
+        id: 4,
+        name: "Bolivia"
+      }
     ]
   },
   mutations: {
@@ -46,7 +53,10 @@ export const store = new Vuex.Store({
       state.user = null;
       console.log("se borraran los datos");
     },
-    auth_success(state, { token, user }) {
+    auth_success(state, {
+      token,
+      user
+    }) {
       state.status = "success";
       state.token = token;
       state.user = user;
@@ -57,7 +67,9 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    logout({ commit }) {
+    logout({
+      commit
+    }) {
       return new Promise((resolve, reject) => {
         axios
           .get("/api/logout")
@@ -73,13 +85,20 @@ export const store = new Vuex.Store({
       });
       // delete axios.defaults.headers.common['Authorization'];
     },
-    showSnackbar({ commit }, { text, color }) {
+    showSnackbar({
+      commit
+    }, {
+      text,
+      color
+    }) {
       commit("showSnackbar", {
         text,
         color
       });
     },
-    login({ commit }, user) {
+    login({
+      commit
+    }, user) {
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios

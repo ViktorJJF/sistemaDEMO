@@ -1,5 +1,5 @@
 <template>
-  <custom-card title="Estadísticas" icon="mdi-chart-bar">
+  <!-- <custom-card title="Estadísticas" icon="mdi-chart-bar">
     <template v-slot:content>
       <div v-for="product in getProducts" :key="product.id">
         <v-alert prominent type="warning" v-show="product.stock < 5">
@@ -132,7 +132,7 @@
         </v-row>
       </v-container>
     </template>
-  </custom-card>
+  </custom-card> -->
 </template>
 
 <script>
