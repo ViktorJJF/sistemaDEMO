@@ -2,22 +2,12 @@
   <v-container fluid>
     <v-row justify="center">
       <material-card
-        width="95%"
+        width="1000px"
         icon="mdi-account-card-details"
         color="primary"
         title="Control de pagos"
         text="Resumen de control de pagos"
       >
-        <v-select
-          dark
-          background-color="primary"
-          placeholder="Selecciona rango"
-          item-text="first_name"
-          dense
-          :items="$store.state.membersModule.members"
-          item-value="_id"
-          outlined
-        ></v-select>
         <v-data-table
           :loading="dataTableLoading"
           loading-text="Cargando datos"
@@ -47,175 +37,23 @@
                     outlined
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6">
-                  <v-dialog v-model="dialog" max-width="900px">
-                    <template v-slot:activator="{ on }">
-                      <v-btn color="info" dark class="mb-2 text-none" v-on="on">Agregar Miembro</v-btn>
-                    </template>
-                    <v-card>
-                      <v-card-title>
-                        <span class="headline">{{ formTitle }}</span>
-                      </v-card-title>
-                      <v-divider></v-divider>
-                      <v-container class="pa-5">
-                        <v-row dense>
-                          <v-col cols="12" sm="4">
-                            <v-card>
-                              <v-container fluid>
-                                <image-uploader :img="editedItem.profile_picture"></image-uploader>
-                                <b class="center">
-                                  {{ editedItem.first_name }}
-                                  {{ editedItem.last_name }}
-                                </b>
-                                <v-select
-                                  dark
-                                  background-color="primary"
-                                  placeholder="Selecciona rango"
-                                  item-text="name"
-                                  dense
-                                  v-model="editedItem.rank"
-                                  :items="ranks"
-                                  item-value="_id"
-                                  outlined
-                                ></v-select>
-                              </v-container>
-                            </v-card>
-                          </v-col>
-                          <v-col cols="12" sm="8">
-                            <v-card>
-                              <v-container fluid>
-                                <h3>Detalles del usuario</h3>
-                                <v-row dense>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Nombres</p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.first_name"
-                                      placeholder="Nombres"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Apellidos</p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.last_name"
-                                      placeholder="Apellidos"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">Correo</p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.email"
-                                      placeholder="Correo"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Teléfono</p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.cell_number"
-                                      placeholder="+33 680 807 5770"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Celular</p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.phone_number"
-                                      placeholder="(800) 3537342"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">País</p>
-                                    <v-select
-                                      placeholder="Selecciona rango"
-                                      item-text="name"
-                                      dense
-                                      v-model="editedItem.country"
-                                      :items="countries"
-                                      item-value="_id"
-                                      outlined
-                                    ></v-select>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Ciudad</p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.city"
-                                      placeholder="Selecciona una ciudad"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">Dirección</p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.address"
-                                      placeholder="059 2nd Hill"
-                                    ></v-text-field>
-                                  </v-col>
-                                </v-row>
-                              </v-container>
-                            </v-card>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                      <v-card-actions>
-                        <div class="flex-grow-1"></div>
-                        <v-btn outlined color="error" text @click="close">Cancelar</v-btn>
-                        <v-btn :loading="loadingButton" color="success" @click="save">Guardar</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                </v-col>
-              </v-row>
-              <v-row justify="end">
-                <v-btn small color="info" class="mr-3" @click="exportPDF">Exportar a PDF</v-btn>
-                <v-btn small color="info" @click="exportExcel">Exportar a Excel</v-btn>
               </v-row>
             </v-container>
           </template>
-          <template v-slot:item.paymentState>
-            <v-chip color="error">
-              <v-avatar left>
-                <v-icon>mdi-close-circle</v-icon>
-              </v-avatar>Falta pagar
-            </v-chip>
-            <v-chip color="success">
+          <template v-slot:item.paymentState="{item}">
+            <v-chip color="success" v-if="verifyPayment(item._id)">
               <v-avatar left>
                 <v-icon>mdi-checkbox-marked-circle</v-icon>
               </v-avatar>Pagó
             </v-chip>
+            <v-chip v-else color="error">
+              <v-avatar left>
+                <v-icon>mdi-close-circle</v-icon>
+              </v-avatar>Falta pagar
+            </v-chip>
           </template>
           <template v-slot:item.action="{ item }">
-            <v-btn
-              class="mr-3 mb-1 text-none"
-              small
-              color="success"
-              @click="editItem(item)"
-            >Agregar pago</v-btn>
-            <record text="Ver informe"></record>
+            <v-btn color="info" small dark @click="editItem(item)" class="text-none">Ver pagos</v-btn>
           </template>
           <template v-slot:no-data>
             <v-alert type="error" :value="true">Aún no cuentas con marcas de productos</v-alert>
@@ -234,7 +72,7 @@
         <v-col cols="12" sm="12">
           <span>
             <strong>Total de miembros:</strong>
-            {{ members.length }}
+            {{ payments.length }}
           </span>
         </v-col>
         <div class="text-center pt-2">
@@ -242,6 +80,16 @@
         </div>
       </material-card>
     </v-row>
+    <v-dialog v-model="dialog" max-width="800">
+      <v-card>
+        <record-component
+          v-if="dialog"
+          text="Ver informe"
+          :memberId="editedItem._id"
+          :fullname="editedItem.first_name+' '+editedItem.last_name"
+        ></record-component>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -255,13 +103,13 @@ import XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ImageUploader from "@/components/common/ImageUploader";
-import Record from "@/components/PaymentsControl/Record";
+import RecordComponent from "@/components/PaymentsControl/Record";
 
 export default {
   components: {
     MaterialCard,
     ImageUploader,
-    Record
+    RecordComponent
   },
   filters: {
     dateFormat: function(value) {
@@ -316,7 +164,7 @@ export default {
       },
       { text: "Acciones", value: "action", sortable: false }
     ],
-    // members: [],
+    // payments: [],
     editedIndex: -1,
     editedItem: {},
     defaultItem: {}
@@ -324,6 +172,9 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "Nuevo pago" : "Resumen de pagos";
+    },
+    payments() {
+      return this.$store.state.paymentsModule.payments;
     },
     members() {
       return this.$store.state.membersModule.members;
@@ -339,62 +190,27 @@ export default {
   },
   methods: {
     async initialData() {
+      //members
       this.dataTableLoading = true;
       await this.$store.dispatch("membersModule/fetchMembers");
       this.dataTableLoading = false;
-    },
-    exportExcel() {
-      let data = XLSX.utils.json_to_sheet(this.members);
-      const workbook = XLSX.utils.book_new();
-      const filename = "miembros-logia";
-      XLSX.utils.book_append_sheet(workbook, data, filename);
-      XLSX.writeFile(workbook, `${filename}.xlsx`);
-    },
-    exportPDF() {
-      // Default export is a4 paper, portrait, using milimeters for units
-      var doc = new jsPDF({
-        orientation: "landscape"
-      });
-      doc.text(
-        "Listado de miembros de la logia: Francisco de Paula Gonzáles Vigil N° 38",
-        15,
-        10
-      );
-      doc.autoTable({
-        theme: "grid",
-        headStyles: { fillColor: [25, 53, 93] },
-        styles: { fontSize: 9 },
-        columnStyles: { europe: { halign: "center" } }, // European countries centered
-        body: this.members,
-        columns: [
-          { header: "DNI", dataKey: "dni" },
-          { header: "Nombres", dataKey: "first_name" },
-          { header: "Apellidos", dataKey: "last_name" },
-          { header: "Correo", dataKey: "email" },
-          { header: "Celular", dataKey: "cell_number" },
-          { header: "Teléfono", dataKey: "phone_number" },
-          { header: "Dirección", dataKey: "address" },
-          { header: "País", dataKey: "country" },
-          { header: "Ciudad", dataKey: "city" },
-          { header: "Rango", dataKey: "rank" }
-        ]
-      });
-      doc.save("reporte_miembros_logia.pdf");
+      //payments
+      await this.$store.dispatch("paymentsModule/fetchPayments");
     },
     editItem(item) {
-      this.editedIndex = this.members.indexOf(item);
+      this.editedIndex = this.payments.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
     async deleteItem(item) {
-      const index = this.members.indexOf(item);
-      let membersId = this.members[index]._id;
+      const index = this.payments.indexOf(item);
+      let paymentsId = this.payments[index]._id;
       const confirm = await this.$confirm(
         "¿Realmente deseas eliminar este registro?"
       );
       if (confirm) {
-        this.$store.dispatch("membersModule/deleteMember");
-        this.members.splice(index, 1);
+        this.$store.dispatch("paymentsModule/deleteMember");
+        this.payments.splice(index, 1);
       }
     },
     close() {
@@ -407,16 +223,19 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         //update member
-        this.$store.dispatch("membersModule/editMember", {
-          id: this.members[this.editedIndex]._id,
+        this.$store.dispatch("paymentsModule/editMember", {
+          id: this.payments[this.editedIndex]._id,
           data: this.editedItem
         });
         this.close();
       } else {
         //create member
-        this.members.push(this.editedItem);
+        this.payments.push(this.editedItem);
         this.close();
       }
+    },
+    verifyPayment(id) {
+      return this.$store.getters["paymentsModule/paymentsByMember"](id).length;
     }
   }
 };

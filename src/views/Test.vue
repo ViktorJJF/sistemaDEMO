@@ -1,17 +1,16 @@
 <template>
   <v-container fluid>
-    <div v-for="(local,index) in localData" :key="local.id">
-      <v-text-field outlined dense name="name" v-model="local.description"></v-text-field>
-      <v-btn color="success" @click="save(local.id,local)">Guardar</v-btn>
-    </div>
-    <div>LocalData: {{localData}}</div>
-    <div>Store: {{$store.state.testModule.messages}}</div>
+    <record text="Ver informe"></record>
   </v-container>
 </template>
 
 <script>
 import { customCopyObject } from "@/utils/customCopyObject";
+import Record from "@/components/PaymentsControl/Record";
 export default {
+  components: {
+    Record
+  },
   data() {
     return {
       localData: []

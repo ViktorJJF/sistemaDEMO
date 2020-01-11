@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar dark app :color="$store.state.logiaModule.logia.color">
+  <v-app-bar dark app :color="$store.state.logiaModule.logia.color || 'primary'">
     <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
     <v-toolbar-title>{{logiaName}}</v-toolbar-title>
     <!-- <span class="title ml-3 mr-5"></span> -->
