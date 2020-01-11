@@ -5,6 +5,11 @@ Vue.use(Router);
 
 let routes = [
   {
+    path: "/login",
+    component: require("@/views/authPages/Login.vue").default,
+    name: "login"
+  },
+  {
     path: "/",
     component: require("@/layouts/default.vue").default,
     meta: {

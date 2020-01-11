@@ -32,9 +32,11 @@ export default {
   methods: {
     async initialData() {
       // this.dataTableLoading = true;
+
       await this.$store.dispatch("logiaModule/fetchLogia");
-      console.log("se monto app2");
       this.$vuetify.theme.themes.light.primary = this.$store.state.logiaModule.logia.color;
+      this.$store.mutation();
+      console.log("se monto app2");
     }
   }
 };
