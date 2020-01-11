@@ -1,7 +1,7 @@
 <template>
   <custom-card title="Estadísticas" icon="mdi-chart-bar">
     <template v-slot:content>
-      <v-row>
+      <v-row justify="center">
         <v-col cols="12" sm="6" lg="4">
           <material-stats-card
             sub-icon="mdi-update"
@@ -14,7 +14,7 @@
           />
         </v-col>
 
-        <v-col cols="12" sm="6" lg="4">
+        <!-- <v-col cols="12" sm="6" lg="4">
           <material-stats-card
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
@@ -24,9 +24,9 @@
             :value="5"
             small-value="Unidades"
           />
-        </v-col>
+        </v-col>-->
 
-        <v-col cols="12" sm="6" lg="4">
+        <!-- <v-col cols="12" sm="6" lg="4">
           <material-stats-card
             color="red"
             icon="mdi-cellphone-dock"
@@ -36,39 +36,39 @@
             sub-text="Justo Ahora"
             small-value="marcas"
           />
-        </v-col>
+        </v-col>-->
 
         <v-col cols="12" sm="6" lg="4">
           <material-stats-card
             color="indigo"
             icon="mdi-format-list-bulleted"
-            title="Tipos"
+            title="Postulantes"
             :value="6"
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
-            small-value="tipos"
+            small-value="postulantes"
           />
         </v-col>
         <v-col cols="12" sm="6" lg="4">
           <material-stats-card
             color="purple"
             icon="mdi-chart-line"
-            title="Ventas"
+            title="Pagos"
             :value="7"
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
-            small-value="completadas"
+            small-value="pendientes"
           />
         </v-col>
         <v-col cols="12" sm="6" lg="4">
           <material-stats-card
             color="pink"
             icon="mdi-store"
-            title="Compras"
-            :value="8"
+            title="Asistencias"
+            :value="24"
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
-            small-value="completadas"
+            small-value="inasistencias"
           />
         </v-col>
       </v-row>
@@ -81,11 +81,11 @@
               color="info"
               type="Line"
             >
-              <h4 class="title font-weight-light">Ventas mensuales</h4>
+              <h4 class="title font-weight-light">Miembros mensuales</h4>
 
               <p class="category d-inline-flex font-weight-light">
                 <v-icon color="green" small>mdi-arrow-up</v-icon>
-                <span class="green--text">0%</span>&nbsp; incremento de ventas
+                <span class="green--text">0%</span>&nbsp; incremento de miembros
                 este mes
               </p>
 
@@ -102,10 +102,10 @@
               color="red"
               type="Line"
             >
-              <h4 class="title font-weight-light">Compras mensuales</h4>
+              <h4 class="title font-weight-light">Asistencias mensuales</h4>
               <p class="category d-inline-flex font-weight-light">
                 <v-icon color="green" small>mdi-arrow-up</v-icon>
-                <span class="green--text">0%</span>&nbsp; incremento de compras
+                <span class="green--text">0%</span>&nbsp; incremento de asistencias
                 este mes
               </p>
               <template v-slot:actions>
@@ -142,17 +142,17 @@ export default {
             "En",
             "Fe",
             "Ma",
-            "Ab",
-            "May",
-            "Jun",
-            "Jul",
-            "Ag",
-            "Se",
-            "Oc",
-            "No",
-            "Di"
+            "Ab"
+            // "May",
+            // "Jun",
+            // "Jul",
+            // "Ag",
+            // "Se",
+            // "Oc",
+            // "No",
+            // "Di"
           ],
-          series: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+          series: [[27, 28, 29, 30]]
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
@@ -174,17 +174,17 @@ export default {
             "En",
             "Fe",
             "Ma",
-            "Ab",
-            "May",
-            "Jun",
-            "Jul",
-            "Ag",
-            "Se",
-            "Oc",
-            "No",
-            "Di"
+            "Ab"
+            // "May",
+            // "Jun",
+            // "Jul",
+            // "Ag",
+            // "Se",
+            // "Oc",
+            // "No",
+            // "Di"
           ],
-          series: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+          series: [[25, 27, 27, 30]]
         },
         options: {
           lineSmooth: this.$chartist.Interpolation.cardinal({
@@ -248,25 +248,7 @@ export default {
     await this.$store.dispatch("membersModule/fetchMembers");
   },
   methods: {
-    async getInitialData() {
-      //count orders
-      await this.$store.dispatch("countOrders");
-      //count purchases
-      await this.$store.dispatch("countPurchases");
-      axios
-        .get("/api/orders/count-by-date")
-        .then(res => {
-          let datas = res.data.payload;
-          datas.forEach(data => {
-            this.dailySalesChart.data.series[0][parseInt(data._id)] =
-              data.count;
-          });
-          this.isDataReady = true;
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
+    async getInitialData() {}
   },
   computed: {
     getTotalMembers() {

@@ -72,7 +72,7 @@
         <v-col cols="12" sm="12">
           <span>
             <strong>Total de miembros:</strong>
-            {{ payments.length }}
+            {{ members.length }}
           </span>
         </v-col>
         <div class="text-center pt-2">
@@ -80,7 +80,7 @@
         </div>
       </material-card>
     </v-row>
-    <v-dialog v-model="dialog" max-width="800">
+    <v-dialog v-model="dialog" max-width="700">
       <v-card>
         <record-component
           v-if="dialog"

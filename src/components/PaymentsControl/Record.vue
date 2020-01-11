@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-    {{payments2}}
     <v-data-table
       hide-default-footer
       disable-pagination
@@ -14,21 +13,19 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Resumen de pagos de: {{fullname}}</v-toolbar-title>
+          <v-toolbar-title>Resumen de pagos de: {{fullname}} ({{totalPayments}}/10 pagos)</v-toolbar-title>
         </v-toolbar>
-        <p>9/10 pagos</p>
-        {{expanded}}
       </template>
       <template v-slot:item.action="{ item }">
         <v-btn
-          v-show="!item.paid"
+          v-show="item.paid"
           class="mr-3 mb-1 text-none"
           small
           color="success"
           @click="editItem(item)"
         >Editar</v-btn>
         <v-btn
-          v-show="item.paid"
+          v-show="!item.paid"
           class="mr-3 mb-1 text-none"
           small
           color="error"
@@ -36,11 +33,33 @@
         >Agregar pago</v-btn>
       </template>
       <template v-slot:item.paid="{ item }">
-        <p v-if="item.paid" class="font-green">Pagó</p>
-        <p v-else class="font-red">Falta pagar</p>
+        <v-checkbox color="primary" v-model="item.paid" :value="item.paid"></v-checkbox>
+        <!-- <p v-if="item.paid" class="font-green">Pagó</p>
+        <p v-else class="font-red">Falta pagar</p>-->
       </template>
       <template v-slot:expanded-item="{ item,headers }">
-        <td :colspan="headers.length">{{item}}</td>
+        <td :colspan="headers.length">
+          <v-container fluid>
+            <v-row align="center">
+              <v-col cols="12" sm="6">
+                <v-text-field :value="200" dense hide-details outlined name="monto" label="monto"></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="3">
+                <v-select
+                  dense
+                  hide-details
+                  outlined
+                  :items="['Soles','Dolares']"
+                  value="Soles"
+                  label="Moneda"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" sm="3">
+                <v-btn small color="success" @click="savePayment(item)">Guardar</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </td>
       </template>
     </v-data-table>
   </v-container>
@@ -110,6 +129,29 @@ export default {
         this.payments[paymentIndex].paid = true;
         console.log(payment.date.substring(0, 1));
       });
+    },
+    editItem(item) {
+      console.log("se editara el item: ", item.id);
+      this.expanded.push(this.payments[item.id - 1]);
+    },
+    savePayment(item) {
+      console.log("se guardara el item: ", item.id);
+      let toSave = this.expanded.findIndex(row => row.id == item.id);
+      this.expanded.splice(toSave, 1);
+      console.log("guardar: ", this.payments[toSave]);
+      this.payments[item.id - 1].paid = true;
+      this.$store.commit(
+        "successModule/showSuccess",
+        "Pago guardado con éxito"
+      );
+    }
+  },
+  computed: {
+    totalPayments() {
+      return this.payments.reduce((prev, curr) => {
+        if (curr.paid == true) return prev + 1;
+        else return prev;
+      }, 0);
     }
   }
 };

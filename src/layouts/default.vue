@@ -35,7 +35,7 @@ export default {
 
       await this.$store.dispatch("logiaModule/fetchLogia");
       this.$vuetify.theme.themes.light.primary = this.$store.state.logiaModule.logia.color;
-      this.$store.mutation();
+      this.$store.commit("successModule/showSuccess", "Bienvenido");
       console.log("se monto app2");
     }
   }

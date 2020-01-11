@@ -75,19 +75,14 @@ export default {
         },
         {
           icon: "mdi-account-card-details",
-          text: "Perfil de Logia",
-          to: "logiaProfile"
-        },
-        {
-          icon: "mdi-account-card-details",
           text: "Miembros",
           to: "members"
         },
-        {
-          icon: "mdi-format-list-checks",
-          text: "Postulantes",
-          to: "postulants"
-        },
+        // {
+        //   icon: "mdi-format-list-checks",
+        //   text: "Postulantes",
+        //   to: "postulants"
+        // },
         {
           icon: "mdi-format-list-checks",
           text: "Control de pagos",
@@ -97,12 +92,12 @@ export default {
           icon: "mdi-format-list-checks",
           text: "Control de Asistencias",
           to: "assistancesControl"
-        },
-        {
-          icon: "mdi-format-list-checks",
-          text: "test",
-          to: "test"
         }
+        // {
+        //   icon: "mdi-format-list-checks",
+        //   text: "test",
+        //   to: "test"
+        // }
       ],
       expansionItems: [
         {

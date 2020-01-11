@@ -70,7 +70,8 @@ export default {
 /* BASIC */
 .backgroundImage {
   height: 100%;
-  background-color: #56baed;
+  background-color: #28156c;
+  opacity: 0.9;
 }
 body {
   font-family: "Poppins", sans-serif;
