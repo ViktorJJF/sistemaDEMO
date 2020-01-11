@@ -1,17 +1,6 @@
 <template>
   <!-- <custom-card title="Estadísticas" icon="mdi-chart-bar">
     <template v-slot:content>
-      <div v-for="product in getProducts" :key="product.id">
-        <v-alert prominent type="warning" v-show="product.stock < 5">
-          <v-row align="center">
-            <v-col class="grow">
-              Tu producto
-              <strong class="underline">{{ product.model }}</strong>
-              está a punto de agotarse (stock actual: {{ product.stock }})
-            </v-col>
-          </v-row>
-        </v-alert>
-      </div>
       <v-row>
         <v-col cols="12" sm="6" lg="4">
           <material-stats-card
@@ -19,9 +8,9 @@
             sub-text="Justo Ahora"
             color="green"
             icon="mdi-account"
-            title="Usuarios"
-            :value="1"
-            small-value="usuarios"
+            title="Miembros"
+            :value="getTotalMembers"
+            small-value="Miembros"
           />
         </v-col>
 
@@ -32,7 +21,7 @@
             color="orange"
             icon="mdi-content-copy"
             title="Productos"
-            :value="$store.getters.getProducts.length"
+            :value="5"
             small-value="Unidades"
           />
         </v-col>
@@ -42,7 +31,7 @@
             color="red"
             icon="mdi-cellphone-dock"
             title="Marcas"
-            :value="brands.length"
+            :value="5"
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
             small-value="marcas"
@@ -54,7 +43,7 @@
             color="indigo"
             icon="mdi-format-list-bulleted"
             title="Tipos"
-            :value="types.length"
+            :value="6"
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
             small-value="tipos"
@@ -65,7 +54,7 @@
             color="purple"
             icon="mdi-chart-line"
             title="Ventas"
-            :value="$store.getters.getTotalOrders"
+            :value="7"
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
             small-value="completadas"
@@ -76,7 +65,7 @@
             color="pink"
             icon="mdi-store"
             title="Compras"
-            :value="$store.getters.getTotalPurchases"
+            :value="8"
             sub-icon="mdi-update"
             sub-text="Justo Ahora"
             small-value="completadas"
@@ -102,9 +91,7 @@
 
               <template v-slot:actions>
                 <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
-                <span class="caption grey--text font-weight-light"
-                  >actualizado justo ahora</span
-                >
+                <span class="caption grey--text font-weight-light">actualizado justo ahora</span>
               </template>
             </material-chart-card>
           </v-col>
@@ -123,9 +110,7 @@
               </p>
               <template v-slot:actions>
                 <v-icon class="mr-2" small>mdi-clock-outline</v-icon>
-                <span class="caption grey--text font-weight-light"
-                  >actualizado justo ahora</span
-                >
+                <span class="caption grey--text font-weight-light">actualizado justo ahora</span>
               </template>
             </material-chart-card>
           </v-col>
@@ -138,8 +123,17 @@
 <script>
 import dashboardCard from "@/components/Statistics/dashboardCard";
 import CustomCard from "@/components/Statistics/CustomCard";
+import MaterialStatsCard from "@/components/Statistics/StatsCard";
+import MaterialChartCard from "@/components/Statistics/ChardCard";
 import apexChart from "vue-apexcharts";
 export default {
+  components: {
+    CustomCard,
+    dashboardCard,
+    apexChart,
+    MaterialStatsCard,
+    MaterialChartCard
+  },
   data() {
     return {
       emailsSubscriptionChart: {
@@ -250,13 +244,8 @@ export default {
       ]
     };
   },
-  components: {
-    CustomCard,
-    dashboardCard,
-    apexChart
-  },
-  mounted() {
-    // this.getInitialData();
+  async mounted() {
+    await this.$store.dispatch("membersModule/fetchMembers");
   },
   methods: {
     async getInitialData() {
@@ -280,17 +269,8 @@ export default {
     }
   },
   computed: {
-    getProducts() {
-      return 4;
-    },
-    brands() {
-      return 5;
-    },
-    types() {
-      return 6;
-    },
-    colors() {
-      return 7;
+    getTotalMembers() {
+      return this.$store.getters["membersModule/getTotalMembers"];
     }
   }
 };

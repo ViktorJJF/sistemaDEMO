@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <router-view></router-view>
+    <router-view :key="$store.state.componentKey"></router-view>
     <success-message />
     <error-message />
     <loading-screen />
@@ -16,6 +16,9 @@ export default {
     SuccessMessage,
     ErrorMessage,
     LoadingScreen
-  }
+  },
+  mounted() {}
 };
 </script>
+<style lang="scss">
+</style>

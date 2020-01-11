@@ -14,7 +14,12 @@
     <v-divider class="mx-3 mb-3"></v-divider>
     <v-list nav flat>
       <template v-for="(item, i) in items">
-        <v-list-item active-class="primary" :key="i" :to="{ name: item.to }">
+        <v-list-item
+          @click="selectItem(i)"
+          :style="i===selectedItem?{backgroundColor:$store.state.logiaModule.logia.color}:''"
+          :key="i"
+          :to="{ name: item.to }"
+        >
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -23,6 +28,34 @@
           </v-list-item-content>
         </v-list-item>
       </template>
+      <!-- expansion menu -->
+      <v-list-group
+        color="white"
+        v-for="item in expansionItems"
+        :key="item.title"
+        v-model="item.active"
+        :prepend-icon="item.icon"
+      >
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.text"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+        <v-list-item
+          :style="idy===selectedItemExpansive?{backgroundColor:$store.state.logiaModule.logia.color}:''"
+          :to="{name:subItem.to}"
+          v-for="(subItem,idy) in item.items"
+          :key="subItem.title"
+          @click="selectItemExansive(idy)"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ subItem.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="subItem.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -31,6 +64,9 @@
 export default {
   data() {
     return {
+      selectedItem: 0,
+      selectedItemExpansive: null,
+      selectedItemStyle: {},
       items: [
         {
           icon: "mdi-chart-bar",
@@ -67,6 +103,24 @@ export default {
           text: "test",
           to: "test"
         }
+      ],
+      expansionItems: [
+        {
+          icon: "mdi-format-list-checks",
+          text: "Ajustes",
+          items: [
+            {
+              icon: "mdi-format-list-checks",
+              title: "Personalización",
+              to: "personalization"
+            },
+            {
+              icon: "mdi-format-list-checks",
+              title: "Suscripción",
+              to: "suscription"
+            }
+          ]
+        }
       ]
     };
   },
@@ -85,8 +139,22 @@ export default {
     email() {
       return "Logia Masonica Francisco de Paula Gonzales Vigil";
     }
+  },
+  methods: {
+    selectItem(i) {
+      this.selectedItem = i;
+      this.selectedItemExpansive = -1;
+    },
+    selectItemExansive(i) {
+      this.selectedItemExpansive = i;
+      this.selectedItem = -1;
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.customBackground {
+  background-color: aqua;
+}
+</style>

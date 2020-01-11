@@ -1,17 +1,13 @@
 <template>
   <div>
-    <div class="text-center mb-5">
-      <v-btn
-        @click="pickFile"
-        rounded
-        outlined
-        color="info"
-        class="text-none center"
-        >Escoge la imagen <v-icon right>mdi-upload</v-icon></v-btn
-      >
+    <div class="mb-5">
+      <v-btn @click="pickFile" rounded outlined color="info" class="text-none center">
+        Escoge la imagen
+        <v-icon right>mdi-upload</v-icon>
+      </v-btn>
     </div>
     <v-img
-      class="border-image center mb-3"
+      class="border-image mb-3"
       :src="imageUrl"
       aspect-ratio="1.7"
       contain
@@ -19,25 +15,19 @@
     ></v-img>
     <v-img
       v-else
-      class="border-image center mb-3"
+      class="border-image mb-3"
       :src="img"
       lazy-src="/images/image-placeholder.png"
       contain
       max-width="200"
       max-height="150"
     ></v-img>
-    <input
-      type="file"
-      id="file"
-      ref="file"
-      v-on:change="handleFileUpload"
-      style="display: none"
-    />
+    <input type="file" id="file" ref="file" v-on:change="handleFileUpload" style="display: none" />
     <!-- <div class="text-center" v-if="editMode">
       <div class="headline">{{ imageName }}</div>
       <v-btn color="success" @click="submitFile()">Subir</v-btn>
       <v-btn color="error" outlined @click="resetValues()">Cancelar</v-btn>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -119,11 +109,5 @@ export default {
 .border-image {
   border-style: solid;
   border-width: 1px;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
 }
 </style>

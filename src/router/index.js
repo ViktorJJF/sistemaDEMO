@@ -23,6 +23,7 @@ let routes = [{
       name: "members",
       component: require("@/views/Members").default
     },
+<<<<<<< HEAD
     {
       path: "/postulantes",
       name: "postulants",
@@ -50,6 +51,57 @@ let routes = [{
     }
   ]
 }];
+=======
+    children: [
+      {
+        path: "/estadisticas",
+        name: "statistics",
+        component: require("@/views/Statistics").default
+      },
+      {
+        path: "/miembros",
+        name: "members",
+        component: require("@/views/Members").default
+      },
+      {
+        path: "/postulantes",
+        name: "postulants",
+        component: require("@/views/Postulants").default
+      },
+      {
+        path: "/control-de-pagos",
+        name: "paymentsControl",
+        component: require("@/views/PaymentsControl").default
+      },
+      {
+        path: "/control-de-asistencias",
+        name: "assistancesControl",
+        component: require("@/views/AssistancesControl").default
+      },
+      {
+        path: "/perfil-de-logia",
+        name: "logiaProfile",
+        component: require("@/views/LogiaProfile").default
+      },
+      {
+        path: "/personalizacion",
+        name: "personalization",
+        component: require("@/views/Personalization").default
+      },
+      {
+        path: "/suscripcion",
+        name: "suscription",
+        component: require("@/views/Suscription").default
+      },
+      {
+        path: "/test",
+        name: "test",
+        component: require("@/views/Test").default
+      }
+    ]
+  }
+];
+>>>>>>> 97a9e145b8ee54153bbc5b1186c6bd73a29da00e
 
 const router = new Router({
   routes,
