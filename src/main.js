@@ -1,7 +1,9 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { store } from "./store";
+import {
+  store
+} from "./store";
 import vuetify from "@/plugins/vuetify";
 import VuetifyConfirm from "vuetify-confirm";
 Vue.use(VuetifyConfirm, {
@@ -20,6 +22,7 @@ Vue.use(VuetifyConfirm, {
 import "@/plugins/veevalidate";
 import "@/plugins/vue-chartist";
 import "@/plugins/deepCopy";
+import "@/plugins/safeAccess";
 import "./bootstrap.js";
 import "@/assets/scss/myStyles.scss";
 

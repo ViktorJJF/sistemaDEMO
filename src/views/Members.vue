@@ -8,16 +8,6 @@
         title="Listado de miembros"
         text="Tabla resumen de miembros de la logia"
       >
-        <v-select
-          dark
-          background-color="primary"
-          placeholder="Selecciona rango"
-          item-text="first_name"
-          dense
-          :items="$store.state.membersModule.members"
-          item-value="_id"
-          outlined
-        ></v-select>
         <v-data-table
           :loading="dataTableLoading"
           loading-text="Cargando datos"

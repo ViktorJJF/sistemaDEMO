@@ -15,7 +15,7 @@
           :search="search"
           hide-default-footer
           :headers="headers"
-          :items="members"
+          :items="filteredMembers"
           sort-by="calories"
           @page-count="pageCount = $event"
           :page.sync="page"
@@ -23,20 +23,38 @@
         >
           <template v-slot:top>
             <v-container>
-              <span class="font-weight-bold">Filtrar por nombre: {{ search }}</span>
               <v-row>
-                <v-col cols="12" sm="6">
+                <v-col cols="12" sm="5">
+                  <span class="font-weight-bold">Filtrar por nombre/dni: {{ search }}</span>
                   <v-text-field
                     clearable
                     dense
                     hide-details
                     v-model="search"
                     append-icon="mdi-magnify"
-                    placeholder="Escribe el nombre a buscar"
+                    placeholder="Escribe el nombre o DNI a buscar"
                     single-line
                     outlined
                   ></v-text-field>
                 </v-col>
+                <v-col cols="12" sm="4">
+                  <span class="font-weight-bold">Filtrar por estado:</span>
+                  <v-select
+                    clearable
+                    @click:clear="showAllTypes()"
+                    hide-details
+                    dense
+                    placeholder="Selecciona un estado"
+                    v-model="selectedState"
+                    :items="['Pagó','Falta pagar']"
+                    item-text="name"
+                    item-value="_id"
+                    outlined
+                  ></v-select>
+                </v-col>
+              </v-row>
+              <v-row justify="end">
+                <v-btn small color="info" class="mr-3" @click="exportPDF">Exportar a PDF</v-btn>
               </v-row>
             </v-container>
           </template>
@@ -72,7 +90,7 @@
         <v-col cols="12" sm="12">
           <span>
             <strong>Total de miembros:</strong>
-            {{ payments.length }}
+            {{ members.length }}
           </span>
         </v-col>
         <div class="text-center pt-2">
@@ -80,7 +98,7 @@
         </div>
       </material-card>
     </v-row>
-    <v-dialog v-model="dialog" max-width="800">
+    <v-dialog v-model="dialog" max-width="700">
       <v-card>
         <record-component
           v-if="dialog"
@@ -117,6 +135,7 @@ export default {
     }
   },
   data: () => ({
+    selectedState: null,
     dataTableLoading: true,
     page: 1,
     pageCount: 0,
@@ -178,6 +197,9 @@ export default {
     },
     members() {
       return this.$store.state.membersModule.members;
+    },
+    filteredMembers() {
+      return this.members;
     }
   },
   watch: {
@@ -196,6 +218,57 @@ export default {
       this.dataTableLoading = false;
       //payments
       await this.$store.dispatch("paymentsModule/fetchPayments");
+    },
+    exportPDF() {
+      // Default export is a4 paper, portrait, using milimeters for units
+      var doc = new jsPDF({
+        orientation: "landscape"
+      });
+      doc.text(
+        "Listado de miembros de la logia: Francisco de Paula Gonzáles Vigil N° 38",
+        15,
+        10
+      );
+      let rows = [["1", "2", "3"], ["2", "4", "✓", "\u2713"]];
+      let columns = [
+        "Nombres",
+        "Apellidos",
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+      ];
+      doc.autoTable(columns, rows, {
+        theme: "grid",
+        headStyles: { fillColor: [25, 53, 93] },
+        styles: { fontSize: 8 },
+        columnStyles: { europe: { halign: "center" } }, // European countries centered
+        body: this.members
+        // columns: [
+        //   { header: "Nombres", dataKey: "first_name" },
+        //   { header: "Apellidos", dataKey: "last_name" },
+        //   { header: "Enero", dataKey: "0" },
+        //   { header: "Febrero", dataKey: "1" },
+        //   { header: "Marzo", dataKey: "2" },
+        //   { header: "Abril", dataKey: "3" },
+        //   { header: "Mayo", dataKey: "4" },
+        //   { header: "Junio", dataKey: "5" },
+        //   { header: "Agosto", dataKey: "6" },
+        //   { header: "Septiembre", dataKey: "7" },
+        //   { header: "Octubre", dataKey: "8" }
+        //   // { header: "Noviembre", dataKey: "9" },
+        //   // { header: "Diciembre", dataKey: "10" }
+        // ]
+      });
+      doc.save("reporte_miembros_logia.pdf");
     },
     editItem(item) {
       this.editedIndex = this.payments.indexOf(item);

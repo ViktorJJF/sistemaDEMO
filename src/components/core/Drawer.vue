@@ -16,7 +16,7 @@
       <template v-for="(item, i) in items">
         <v-list-item
           @click="selectItem(i)"
-          :style="i===selectedItem?{backgroundColor:$store.state.logiaModule.logia.color}:''"
+          :style="$route.name===item.to?{backgroundColor:$store.state.logiaModule.logia.color}:''"
           :key="i"
           :to="{ name: item.to }"
         >
@@ -42,7 +42,7 @@
           </v-list-item-content>
         </template>
         <v-list-item
-          :style="idy===selectedItemExpansive?{backgroundColor:$store.state.logiaModule.logia.color}:''"
+          :style="$route.name===subItem.to?{backgroundColor:$store.state.logiaModule.logia.color}:''"
           :to="{name:subItem.to}"
           v-for="(subItem,idy) in item.items"
           :key="subItem.title"
@@ -64,7 +64,8 @@
 export default {
   data() {
     return {
-      selectedItem: 0,
+      activeClass: "active",
+      selectedItem: null,
       selectedItemExpansive: null,
       selectedItemStyle: {},
       items: [
@@ -75,19 +76,14 @@ export default {
         },
         {
           icon: "mdi-account-card-details",
-          text: "Perfil de Logia",
-          to: "logiaProfile"
-        },
-        {
-          icon: "mdi-account-card-details",
           text: "Miembros",
           to: "members"
         },
-        {
-          icon: "mdi-format-list-checks",
-          text: "Postulantes",
-          to: "postulants"
-        },
+        // {
+        //   icon: "mdi-format-list-checks",
+        //   text: "Postulantes",
+        //   to: "postulants"
+        // },
         {
           icon: "mdi-format-list-checks",
           text: "Control de pagos",
@@ -97,16 +93,21 @@ export default {
           icon: "mdi-format-list-checks",
           text: "Control de Asistencias",
           to: "assistancesControl"
-        },
-        {
-          icon: "mdi-format-list-checks",
-          text: "test",
-          to: "test"
         }
+        // {
+        //   icon: "mdi-format-list-checks",
+        //   text: "Reportes",
+        //   to: "reportes"
+        // }
+        // {
+        //   icon: "mdi-format-list-checks",
+        //   text: "test",
+        //   to: "test"
+        // }
       ],
       expansionItems: [
         {
-          icon: "mdi-format-list-checks",
+          icon: "mdi-settings",
           text: "Ajustes",
           items: [
             {
@@ -154,7 +155,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.customBackground {
-  background-color: aqua;
-}
 </style>

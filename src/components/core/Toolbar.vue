@@ -67,15 +67,16 @@ export default {
   },
   methods: {
     logout() {
-      this.$store
-        .dispatch("logout")
-        .then(res => {
-          console.log("se pusheara el login");
-          this.$router.push({ name: "login" });
-        })
-        .catch(err => {
-          console.log("algo salio mal en logout");
-        });
+      // this.$store
+      //   .dispatch("logout")
+      //   .then(res => {
+      //     console.log("se pusheara el login");
+      //     this.$router.push({ name: "login" });
+      //   })
+      //   .catch(err => {
+      //     console.log("algo salio mal en logout");
+      //   });
+      this.$router.push({ name: "login" });
     }
   }
 };
