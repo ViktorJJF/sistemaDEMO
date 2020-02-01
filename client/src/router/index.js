@@ -66,6 +66,24 @@ let routes = [
         component: require("@/views/Test").default
       }
     ]
+  },
+  {
+    path: "/resumen",
+    component: require("@/layouts/UserLayout.vue").default,
+    meta: {
+      requiresAuth: true
+    },
+    name: "userDashboard",
+    redirect: {
+      name: "overview"
+    },
+    children: [
+      {
+        path: "/resumen",
+        name: "overview",
+        component: require("@/views/UsersPages/Overview").default
+      }
+    ]
   }
 ];
 
