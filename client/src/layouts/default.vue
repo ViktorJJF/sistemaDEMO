@@ -16,16 +16,25 @@ import Toolbar from "@/components/core/Toolbar";
 export default {
   components: {
     Drawer,
-    Toolbar
+    Toolbar,
   },
   data() {
     return {
-      componentKey: 0
+      componentKey: 0,
     };
   },
   props: {
-    source: String
-  }
+    source: String,
+  },
+  created() {
+    this.initialData();
+  },
+  methods: {
+    async initialData() {
+      await this.$store.dispatch("logiaModule/fetchLogia");
+      this.logia = this.$deepCopy(this.$store.state.logiaModule.logia);
+    },
+  },
 };
 </script>
 

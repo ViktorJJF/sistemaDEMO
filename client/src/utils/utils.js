@@ -1,6 +1,25 @@
-import * as types from "@/store/mutation-types";
+import axios from "axios";
 import { isPast, format } from "date-fns";
 import { store } from "@/store";
+
+export const isLogged = () => {
+  console.log("ejectuando logged");
+  return new Promise((resolve, reject) => {
+    axios
+      .post("/api/users/logged")
+      .then((res) => {
+        if (res.data.ok) {
+          resolve(res.data.payload);
+        } else {
+          resolve(false);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        reject(err);
+      });
+  });
+};
 
 // const localesDateFns = {
 //     en: require('date-fns/locale/en'),
@@ -21,7 +40,7 @@ export const formatErrorMessages = (translationParent, msg) => {
     const json = JSON.parse(JSON.stringify(msg));
     // If error message is an array, then we have mutiple errors
     if (Array.isArray(json)) {
-      json.map(error => {
+      json.map((error) => {
         errorArray.push(i18n.t(`${translationParent}.${error.msg}`));
       });
     } else {
@@ -50,7 +69,7 @@ export const buildPayloadPagination = (pagination, search) => {
       page,
       limit: rowsPerPage,
       filter: search.query,
-      fields: search.fields
+      fields: search.fields,
     };
   } else {
     // Pagination with no filters
@@ -58,7 +77,7 @@ export const buildPayloadPagination = (pagination, search) => {
       sort: sortBy,
       order: descending,
       page,
-      limit: rowsPerPage
+      limit: rowsPerPage,
     };
   }
   return query;
@@ -66,29 +85,19 @@ export const buildPayloadPagination = (pagination, search) => {
 
 // Catches error connection or any other error (checks if error.response exists)
 export const handleError = (error, commit, reject) => {
-  let errMsg = "";
+  let errMsg = error.response.data.err.message;
+  console.log("el error: ", errMsg);
   // Resets errors in store
   console.log("se entro al error");
   commit("loadingModule/showLoading", false, { root: true });
-  // commit(types.ERROR, null);
-
-  // Checks if unauthorized
-  // if (error.response.status === 401) {
-  //   store.dispatch("userLogout");
-  // } else {
-  //   // Any other error
-  //   errMsg = error.response
-  //     ? error.response.data.errors.msg
-  //     : "SERVER_TIMEOUT_CONNECTION_ERROR";
-  //   setTimeout(() => {
-  //     return errMsg
-  //       ? commit(types.ERROR, errMsg)
-  //       : commit(types.SHOW_ERROR, false);
-  //   }, 0);
-  // }
-  let msg = "Algo salio mal";
+  let msg;
+  if (errMsg) {
+    msg = errMsg;
+  } else {
+    msg = "Algo salio mal";
+  }
   commit("errorModule/showError", msg, {
-    root: true
+    root: true,
   });
   reject(error);
 };
@@ -101,7 +110,7 @@ export const buildSuccess = (
 ) => {
   commit("loadingModule/showLoading", false, { root: true });
   commit("successModule/showSuccess", msg, {
-    root: true
+    root: true,
   });
   //   commit(types.SUCCESS, null, { root: true });
   //   setTimeout(() => {

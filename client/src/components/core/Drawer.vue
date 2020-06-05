@@ -83,7 +83,7 @@ export default {
         //   to: "statistics"
         // },
         {
-          icon: "mdi-account-card-details",
+          icon: "mdi-format-list-checks",
           text: "Miembros",
           to: "members",
         },
@@ -107,11 +107,11 @@ export default {
         //   text: "Reportes",
         //   to: "reportes"
         // }
-        {
-          icon: "mdi-format-list-checks",
-          text: "test",
-          to: "test",
-        },
+        // {
+        //   icon: "mdi-format-list-checks",
+        //   text: "test",
+        //   to: "test",
+        // },
       ],
       expansionItems: [
         {

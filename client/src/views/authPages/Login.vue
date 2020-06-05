@@ -2,66 +2,88 @@
   <div class="backgroundImage">
     <div class="wrapper fadeInDown">
       <div id="formContent">
-        <!-- Tabs Titles -->
-        <h2 class="active">Ingreso</h2>
+        <ValidationObserver ref="obs" v-slot="{ passes }">
+          <v-form>
+            <!-- Tabs Titles -->
+            <h2 class="active">Ingreso</h2>
 
-        <!-- Icon -->
-        <div class="fadeIn first">
-          <v-img class="fadeIn first" aspect-ratio="2" contain src="/images/mason.png"></v-img>
-        </div>
+            <!-- Icon -->
+            <div class="fadeIn first">
+              <v-img
+                class="fadeIn first"
+                aspect-ratio="2"
+                contain
+                src="/images/mason.png"
+              ></v-img>
+            </div>
 
-        <!-- Login Form -->
-        <v-text-field
-          outlined
-          id="login"
-          class="fadeIn second mx-9"
-          name="login"
-          v-model="user.email"
-          label="Correo"
-          prepend-inner-icon="mdi-account"
-          type="text"
-        ></v-text-field>
-        <v-text-field
-          outlined
-          id="password"
-          name="login"
-          class="fadeIn third mx-9"
-          label="Contraseña"
-          prepend-inner-icon="mdi-lock"
-          type="password"
-          v-model="user.password"
-        ></v-text-field>
-        <v-btn
-          class="ma-5"
-          color="info"
-          lass="fadeIn fourth"
-          value="Ingresar"
-          @click="login(user)"
-        >Ingresar</v-btn>
+            <!-- Login Form -->
+            <VTextFieldWithValidation
+              id="login"
+              name="login"
+              class="fadeIn second"
+              customClasses="mx-9 my-3"
+              rules="required|email"
+              v-model="user.email"
+              label="Correo"
+              prepend-inner-icon="mdi-account"
+            />
+            <VTextFieldWithValidation
+              id="password"
+              class="fadeIn second"
+              customClasses="mx-9 my-3"
+              rules="required"
+              v-model="user.password"
+              label="Contraseña"
+              prepend-inner-icon="mdi-lock"
+              type="password"
+            />
+            <v-btn
+              class="ma-5"
+              color="info"
+              lass="fadeIn fourth"
+              value="Ingresar"
+              @click="passes(login)"
+              >Ingresar</v-btn
+            >
+          </v-form>
+        </ValidationObserver>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import VTextFieldWithValidation from "@/components/inputs/VTextFieldWithValidation";
 export default {
+  components: {
+    VTextFieldWithValidation,
+  },
   data() {
     return {
-      user: { email: "", password: "" }
+      user: { email: "", password: "" },
     };
   },
   methods: {
-    login(user) {
-      console.log("verificando login");
-      if (
-        this.user.email == "admin@gmail.com" &&
-        this.user.password == "123456"
-      ) {
-        console.log("entrando al dashboard");
-        this.$router.push({ name: "dashboard" });
-      }
-    }
-  }
+    login() {
+      let user = this.user;
+      this.$store
+        .dispatch("authModule/login", user)
+        .then((res) => {
+          // this.$store.dispatch("showSnackbar", {
+          //   text: res,
+          //   color: "success",
+          // });
+          // this.$router.push({ name: "dashboard" });
+        })
+        .catch((err) => {
+          // this.$store.dispatch("showSnackbar", {
+          //   text: err.response.data,
+          //   color: "error",
+          // });
+        });
+    },
+  },
 };
 </script>
 

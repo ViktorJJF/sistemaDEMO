@@ -33,7 +33,9 @@
         >
           <template v-slot:top>
             <v-container>
-              <span class="font-weight-bold">Filtrar por nombre: {{ search }}</span>
+              <span class="font-weight-bold"
+                >Filtrar por nombre: {{ search }}</span
+              >
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
@@ -55,8 +57,9 @@
                         dark
                         class="mb-2 text-none"
                         v-on="on"
-                        @click="editedItem.rank='Postulante'"
-                      >Agregar Postulante</v-btn>
+                        @click="editedItem.rank = 'Postulante'"
+                        >Agregar Postulante</v-btn
+                      >
                     </template>
                     <v-card>
                       <v-card-title>
@@ -68,7 +71,9 @@
                           <v-col cols="12" sm="4">
                             <v-card>
                               <v-container fluid>
-                                <image-uploader :img="editedItem.profile_picture"></image-uploader>
+                                <image-uploader
+                                  :img="editedItem.profile_picture"
+                                ></image-uploader>
                                 <b class="center">
                                   {{ editedItem.first_name }}
                                   {{ editedItem.last_name }}
@@ -94,7 +99,9 @@
                                 <h3>Detalles del usuario</h3>
                                 <v-row dense>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Nombres</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Nombres
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -105,7 +112,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Apellidos</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Apellidos
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -116,7 +125,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">Correo</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Correo
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -127,7 +138,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Teléfono</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Teléfono
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -138,7 +151,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Celular</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Celular
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -149,7 +164,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">País</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      País
+                                    </p>
                                     <v-select
                                       placeholder="Selecciona rango"
                                       item-text="name"
@@ -161,7 +178,9 @@
                                     ></v-select>
                                   </v-col>
                                   <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">Ciudad</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Ciudad
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -172,7 +191,9 @@
                                     ></v-text-field>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">Dirección</p>
+                                    <p class="body-1 font-weight-bold mb-0">
+                                      Dirección
+                                    </p>
                                     <v-text-field
                                       dense
                                       clearable
@@ -187,20 +208,34 @@
                             </v-card>
                           </v-col>
                         </v-row>
-                        <postulant-info :id="editedItem._id" :key="componentKey"></postulant-info>
+                        <postulant-info
+                          :id="editedItem._id"
+                          :key="componentKey"
+                        ></postulant-info>
                       </v-container>
                       <v-card-actions>
                         <div class="flex-grow-1"></div>
-                        <v-btn outlined color="error" text @click="close">Cancelar</v-btn>
-                        <v-btn :loading="loadingButton" color="success" @click="save">Guardar</v-btn>
+                        <v-btn outlined color="error" text @click="close"
+                          >Cancelar</v-btn
+                        >
+                        <v-btn
+                          :loading="loadingButton"
+                          color="success"
+                          @click="save"
+                          >Guardar</v-btn
+                        >
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
                 </v-col>
               </v-row>
               <v-row justify="end">
-                <v-btn small color="info" class="mr-3" @click="exportPDF">Exportar a PDF</v-btn>
-                <v-btn small color="info" @click="exportExcel">Exportar a Excel</v-btn>
+                <v-btn small color="info" class="mr-3" @click="exportPDF"
+                  >Exportar a PDF</v-btn
+                >
+                <v-btn small color="info" @click="exportExcel"
+                  >Exportar a Excel</v-btn
+                >
               </v-row>
             </v-container>
           </template>
@@ -209,14 +244,28 @@
               class="mr-3 mb-1 text-none"
               small
               color="success"
-              @click="editItem(item);forceRerender();"
-            >Editar</v-btn>
-            <v-btn class="text-none" small color="error" @click="deleteItem(item)">Eliminar</v-btn>
+              @click="
+                editItem(item);
+                forceRerender();
+              "
+              >Editar</v-btn
+            >
+            <v-btn
+              class="text-none"
+              small
+              color="error"
+              @click="deleteItem(item)"
+              >Eliminar</v-btn
+            >
           </template>
           <template v-slot:no-data>
-            <v-alert type="error" :value="true">Aún no cuentas con marcas de productos</v-alert>
+            <v-alert type="error" :value="true"
+              >Aún no cuentas con marcas de productos</v-alert
+            >
           </template>
-          <template v-slot:item.createdAt="{ item }">{{ item.createdAt | dateFormat }}</template>
+          <template v-slot:item.createdAt="{ item }">{{
+            item.createdAt | dateFormat
+          }}</template>
           <template v-slot:item.profile_picture="{ item }">
             <v-img
               :src="item.profile_picture"
@@ -243,8 +292,6 @@
 
 <script>
 import dateFormat from "@/utils/customDate";
-import { customCopyObject } from "@/utils/customCopyObject";
-import { customHttpRequest } from "@/utils/customHttpRequest";
 import MaterialCard from "@/components/global/MaterialCard";
 import XLSX from "xlsx";
 import jsPDF from "jspdf";
@@ -256,12 +303,12 @@ export default {
   components: {
     PostulantInfo,
     MaterialCard,
-    ImageUploader
+    ImageUploader,
   },
   filters: {
     dateFormat: function(value) {
       return dateFormat(value);
-    }
+    },
   },
   data: () => ({
     componentKey: 0,
@@ -279,14 +326,14 @@ export default {
         align: "left",
         sortable: false,
         value: "dni",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Perfil",
         align: "left",
         sortable: false,
         value: "profile_picture",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Nombres",
@@ -294,58 +341,58 @@ export default {
         sortable: true,
         value: "first_name",
         class: "colored",
-        width: 150
+        width: 150,
       },
       {
         text: "Apellidos",
         align: "left",
         sortable: true,
         value: "last_name",
-        width: 150
+        width: 150,
       },
       {
         text: "Correo",
         align: "left",
         sortable: false,
         value: "email",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Celular",
         align: "left",
         sortable: false,
-        value: "cell_number"
+        value: "cell_number",
       },
       {
         text: "Dirección",
         align: "left",
         sortable: false,
-        value: "address"
+        value: "address",
       },
       {
         text: "País",
         align: "left",
         sortable: false,
-        value: "country"
+        value: "country",
       },
       {
         text: "Ciudad",
         align: "left",
         sortable: false,
-        value: "city"
+        value: "city",
       },
       {
         text: "Rango",
         align: "left",
         sortable: false,
-        value: "rank"
+        value: "rank",
       },
-      { text: "Acciones", value: "action", sortable: false }
+      { text: "Acciones", value: "action", sortable: false },
     ],
     // postulants: [],
     editedIndex: -1,
     editedItem: {},
-    defaultItem: {}
+    defaultItem: {},
   }),
   computed: {
     formTitle() {
@@ -359,12 +406,12 @@ export default {
     },
     postulants() {
       return this.$store.state.postulantsModule.postulants;
-    }
+    },
   },
   watch: {
     dialog(val) {
       val || this.close();
-    }
+    },
   },
   mounted() {
     this.initialData();
@@ -388,7 +435,7 @@ export default {
     exportPDF() {
       // Default export is a4 paper, portrait, using milimeters for units
       var doc = new jsPDF({
-        orientation: "landscape"
+        orientation: "landscape",
       });
       doc.text(
         "Listado de miembros de la logia: Francisco de Paula Gonzáles Vigil N° 38",
@@ -411,8 +458,8 @@ export default {
           { header: "Dirección", dataKey: "address" },
           { header: "País", dataKey: "country" },
           { header: "Ciudad", dataKey: "city" },
-          { header: "Rango", dataKey: "rank" }
-        ]
+          { header: "Rango", dataKey: "rank" },
+        ],
       });
       doc.save("reporte_miembros_logia.pdf");
     },
@@ -444,7 +491,7 @@ export default {
         //update postulant
         this.$store.dispatch("postulantsModule/editPostulant", {
           id: this.postulants[this.editedIndex]._id,
-          data: this.editedItem
+          data: this.editedItem,
         });
         this.close();
       } else {
@@ -452,8 +499,8 @@ export default {
         this.postulants.push(this.editedItem);
         this.close();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

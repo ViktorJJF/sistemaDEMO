@@ -50,11 +50,7 @@ router.post("/members", membersController.create);
 router.put("/members/:id", membersController.update);
 router.delete("/members/:id", membersController.deletes);
 //CRUD USERS
-router.get("/users/list", usersController.list);
-router.post("/users/create", usersController.create);
-router.put("/users/update/:id", usersController.update);
-router.delete("/users/delete/:id", usersController.deletes);
-router.post("/login", usersController.login);
-router.post("/users/logged", usersController.getUser);
-router.get("/logout", usersController.logout);
+router.post("/login", membersController.login);
+router.post("/users/logged", membersController.getUser);
+router.get("/logout", membersController.logout);
 module.exports = router;

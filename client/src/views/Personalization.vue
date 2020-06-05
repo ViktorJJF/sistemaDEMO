@@ -13,19 +13,31 @@
             <p class="body-1 font-weight-bold mb-0">Nombre de la logia:</p>
           </v-col>
           <v-col cols="12" sm="9">
-            <v-text-field hide-details dense outlined v-model="logia.name" required></v-text-field>
+            <v-text-field
+              hide-details
+              dense
+              outlined
+              v-model="logia.name"
+              required
+            ></v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
             <p class="body-1 font-weight-bold mb-0">Identificador:</p>
           </v-col>
           <v-col cols="12" sm="9">
-            <v-text-field hide-details dense outlined v-model="logia.number" type="number"></v-text-field>
+            <v-text-field
+              hide-details
+              dense
+              outlined
+              v-model="logia.number"
+              type="number"
+            ></v-text-field>
           </v-col>
           <v-col cols="12" sm="3">
             <p class="body-1 font-weight-bold mb-0">Color</p>
           </v-col>
           <v-col cols="12" sm="9">
-            {{logia.color}}
+            {{ logia.color }}
             <v-color-picker v-model="logia.color" mode="hexa"></v-color-picker>
           </v-col>
           <v-col cols="12" sm="3">
@@ -49,15 +61,14 @@
 <script>
 import MaterialCard from "@/components/global/MaterialCard";
 import ImageUploader from "@/components/common/ImageUploader";
-import customCopyObject from "@/utils/customCopyObject";
 export default {
   components: {
     ImageUploader,
-    MaterialCard
+    MaterialCard,
   },
   data() {
     return {
-      logia: null
+      logia: null,
     };
   },
   mounted() {
@@ -70,10 +81,9 @@ export default {
     },
     updateLogia() {
       this.$store.commit("logiaModule/updateLogia", this.logia);
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -14,20 +14,21 @@
               <v-row justify="center">
                 <v-col cols="12" sm="7">
                   <v-text-field
+                    disabled
                     clearable
                     background-color="white"
                     outlined
                     placeholder="DNI"
                     hide-details
                     type="number"
-                    v-model="dni"
+                    v-model="user.dni"
                   ></v-text-field>
-                  <v-btn x-small color="white" @click="randomDNI">random</v-btn>
+                  <!-- <v-btn x-small color="white" @click="randomDNI">random</v-btn> -->
                 </v-col>
               </v-row>
               <v-row justify="center">
-                <v-btn color="info" large @click="getMemberByDNI(dni)"
-                  >Guardar</v-btn
+                <v-btn color="info" large @click="checkAssistance"
+                  >Marcar</v-btn
                 >
               </v-row>
             </v-container>
@@ -36,7 +37,7 @@
           <v-col cols="12" sm="5" class="text-sm-center">
             <v-container fluid>
               <v-img
-                :src="currentMember ? currentMember.profile_picture : ''"
+                :src="user ? user.profile_picture : ''"
                 class="custom-margin mb-3 border-image"
                 contain
                 width="200"
@@ -45,16 +46,16 @@
               <h2 class="text-white">Datos del miembro</h2>
               <p class="text-white">
                 <b>Nombres:</b>
-                {{ currentMember ? currentMember.first_name : "" }}
-                {{ currentMember ? currentMember.last_name : "" }}
+                {{ user ? user.first_name : "" }}
+                {{ user ? user.last_name : "" }}
               </p>
               <p class="text-white">
                 <b>DNI:</b>
-                {{ currentMember ? currentMember.dni : "" }}
+                {{ user ? user.dni : "" }}
               </p>
               <p class="text-white">
                 <b>Tipo:</b>
-                {{ currentMember ? currentMember.rank : "" }}
+                {{ user ? user.rank : "" }}
               </p>
               <p class="text-white">
                 <b>Hora de entrada:</b>
@@ -74,17 +75,23 @@
 import VueClock from "@dangvanthanh/vue-clock";
 export default {
   components: {
-    VueClock
+    VueClock,
   },
   data() {
     return {
       dni: "",
-      currentMember: null,
-      time: new Date()
+      // currentMember: null,
+      time: new Date(),
     };
   },
   async mounted() {
-    await this.$store.dispatch("membersModule/fetchMembers");
+    this.getMemberByDNI(this.user.dni);
+  },
+  computed: {
+    user() {
+      //from store
+      return this.$store.state.authModule.user;
+    },
   },
   methods: {
     getMemberByDNI(dni) {
@@ -110,8 +117,8 @@ export default {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-  }
+    },
+  },
 };
 </script>
 

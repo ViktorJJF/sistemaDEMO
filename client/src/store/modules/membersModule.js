@@ -27,6 +27,22 @@ const module = {
         }
       });
     },
+    createMember({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        api
+          .saveMember(data)
+          .then((res) => {
+            let data = res.data.payload;
+            commit("loadingModule/showLoading", true, { root: true });
+            buildSuccess("Registro guardado con éxito", commit, resolve);
+            commit("createMember", data);
+            resolve();
+          })
+          .catch((error) => {
+            handleError(error, commit, reject);
+          });
+      });
+    },
     editMember({ commit }, { id, data }) {
       return new Promise((resolve, reject) => {
         api
@@ -48,7 +64,18 @@ const module = {
     },
     deleteMember({ commit }, id) {
       return new Promise((resolve, reject) => {
-        buildSuccess("Eliminado con éxito", commit, resolve);
+        api
+          .deleteMember(id)
+          .then((res) => {
+            let data = res.data.payload;
+            commit("loadingModule/showLoading", true, { root: true });
+            buildSuccess("Registro eliminado con éxito", commit, resolve);
+            commit("deleteMember", id);
+            resolve();
+          })
+          .catch((error) => {
+            handleError(error, commit, reject);
+          });
       });
     },
   },
@@ -59,18 +86,18 @@ const module = {
       });
       state.members = members;
     },
+    createMember(state, data) {
+      state.members.push(data);
+    },
     editMember(state, { id, data }) {
       let indexToUpdate = state.members.findIndex((member) => member._id == id);
-      console.log(
-        "se modificara: ",
-        state.members[indexToUpdate],
-        " con : ",
-        data
-      );
       state.members.splice(indexToUpdate, 1, {
         ...data,
       });
-      console.log("ahora state es: ", state.members);
+    },
+    deleteMember(state, id) {
+      let indexToDelete = state.members.findIndex((member) => member._id == id);
+      state.members.splice(indexToDelete, 1);
     },
     [types.TOTAL_MEMBERS](state, value) {
       state.totalMembers = value;

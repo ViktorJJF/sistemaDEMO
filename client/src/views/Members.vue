@@ -110,6 +110,16 @@
                                         label="Correo"
                                       />
                                     </v-col>
+                                    <v-col cols="12" sm="12" md="12">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        DNI
+                                      </p>
+                                      <VTextFieldWithValidation
+                                        rules="required|decimal"
+                                        v-model="editedItem.dni"
+                                        label="DNI"
+                                      />
+                                    </v-col>
                                     <v-col cols="12" sm="6" md="6">
                                       <p class="body-1 font-weight-bold mb-0">
                                         Teléfono
@@ -167,9 +177,7 @@
                                         Dirección
                                       </p>
                                       <VTextFieldWithValidation
-                                        :rules="{
-                                          required: { allowFalse: true },
-                                        }"
+                                        :rules="{}"
                                         v-model="editedItem.address"
                                         label="059 2nd Hill"
                                       />
@@ -258,8 +266,6 @@
 <script>
 import dateFormat from "@/utils/customDate";
 import Member from "@/classes/Member.js";
-import { customCopyObject } from "@/utils/customCopyObject";
-import { customHttpRequest } from "@/utils/customHttpRequest";
 import MaterialCard from "@/components/global/MaterialCard";
 import XLSX from "xlsx";
 import jsPDF from "jspdf";
@@ -439,13 +445,12 @@ export default {
     },
     async deleteItem(item) {
       const index = this.members.indexOf(item);
-      let membersId = this.members[index]._id;
+      let memberId = this.members[index]._id;
       const confirm = await this.$confirm(
         "¿Realmente deseas eliminar este registro?"
       );
       if (confirm) {
-        this.$store.dispatch("membersModule/deleteMember");
-        this.members.splice(index, 1);
+        this.$store.dispatch("membersModule/deleteMember", memberId);
       }
     },
     close() {
@@ -465,7 +470,7 @@ export default {
         this.close();
       } else {
         //create member
-        this.members.push(this.editedItem);
+        this.$store.dispatch("membersModule/createMember", this.editedItem);
         this.close();
       }
     },

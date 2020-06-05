@@ -50,7 +50,7 @@
                     v-model="selectedState"
                     :items="[
                       { state: true, name: 'Pagó' },
-                      { state: false, name: 'Falta pagar' }
+                      { state: false, name: 'Falta pagar' },
                     ]"
                     item-text="name"
                     item-value="state"
@@ -132,8 +132,6 @@
 <script>
 import dateFormat from "@/utils/customDate";
 import Member from "@/classes/Member.js";
-import { customCopyObject } from "@/utils/customCopyObject";
-import { customHttpRequest } from "@/utils/customHttpRequest";
 import MaterialCard from "@/components/global/MaterialCard";
 import XLSX from "xlsx";
 import jsPDF from "jspdf";
@@ -147,12 +145,12 @@ export default {
   components: {
     MaterialCard,
     ImageUploader,
-    RecordComponent
+    RecordComponent,
   },
   filters: {
     dateFormat: function(value) {
       return dateFormat(value);
-    }
+    },
   },
   data: () => ({
     selectedState: null,
@@ -170,14 +168,14 @@ export default {
         align: "left",
         sortable: false,
         value: "dni",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Perfil",
         align: "left",
         sortable: false,
         value: "profile_picture",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Nombres",
@@ -185,28 +183,28 @@ export default {
         sortable: true,
         value: "first_name",
         class: "colored",
-        width: 150
+        width: 150,
       },
       {
         text: "Apellidos",
         align: "left",
         sortable: true,
         value: "last_name",
-        width: 150
+        width: 150,
       },
       {
         text: "Estado de pagos",
         align: "left",
         sortable: true,
         value: "paymentState",
-        width: 150
+        width: 150,
       },
-      { text: "Acciones", value: "action", sortable: false }
+      { text: "Acciones", value: "action", sortable: false },
     ],
     // payments: [],
     editedIndex: -1,
     editedItem: {},
-    defaultItem: {}
+    defaultItem: {},
   }),
   computed: {
     formTitle() {
@@ -221,15 +219,15 @@ export default {
     filteredMembers() {
       return this.selectedState != null
         ? this.members.filter(
-            member => member.paymentState == this.selectedState
+            (member) => member.paymentState == this.selectedState
           )
         : this.members;
-    }
+    },
   },
   watch: {
     dialog(val) {
       val || this.close();
-    }
+    },
   },
   mounted() {
     this.initialData();
@@ -248,7 +246,7 @@ export default {
     },
     exportPDF() {
       let payments = [];
-      this.filteredMembers.forEach(member => {
+      this.filteredMembers.forEach((member) => {
         payments.push([
           member.first_name,
           member.last_name,
@@ -263,12 +261,12 @@ export default {
           randomBoolean(),
           randomBoolean(),
           randomBoolean(),
-          randomBoolean()
+          randomBoolean(),
         ]);
       });
       // Default export is a4 paper, portrait, using milimeters for units
       var doc = new jsPDF({
-        orientation: "landscape"
+        orientation: "landscape",
       });
       doc.text(
         "Resumen de pagos de la logia: Francisco de Paula Gonzáles Vigil N° 38",
@@ -290,13 +288,13 @@ export default {
         "Septiembre",
         "Octubre",
         "Noviembre",
-        "Diciembre"
+        "Diciembre",
       ];
       doc.autoTable(columns, rows, {
         theme: "grid",
         headStyles: { fillColor: [25, 53, 93] },
         styles: { fontSize: 8 },
-        columnStyles: { europe: { halign: "center" } } // European countries centered
+        columnStyles: { europe: { halign: "center" } }, // European countries centered
         // columns: [
         //   { header: "Nombres", dataKey: "first_name" },
         //   { header: "Apellidos", dataKey: "last_name" },
@@ -343,7 +341,7 @@ export default {
         //update member
         this.$store.dispatch("paymentsModule/editMember", {
           id: this.payments[this.editedIndex]._id,
-          data: this.editedItem
+          data: this.editedItem,
         });
         this.close();
       } else {
@@ -354,8 +352,8 @@ export default {
     },
     verifyPayment(id) {
       return this.$store.getters["paymentsModule/paymentsByMember"](id).length;
-    }
-  }
+    },
+  },
 };
 </script>
 

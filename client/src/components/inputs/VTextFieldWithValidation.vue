@@ -5,6 +5,7 @@
     v-slot="{ errors, valid }"
   >
     <v-text-field
+      :class="customClasses"
       clearable
       dense
       single-line
@@ -33,6 +34,10 @@ export default {
     // must be included in props
     value: {
       type: null,
+    },
+    customClasses: {
+      type: String,
+      default: "",
     },
   },
   data: () => ({

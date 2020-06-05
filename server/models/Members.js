@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
+let validRoles = {
+  values: ["ADMIN", "SUPERADMIN", "USER"],
+  message: "{VALUE} no es un rol válido",
+};
+
 let memberSchema = new Schema(
   {
     first_name: {
@@ -16,6 +21,10 @@ let memberSchema = new Schema(
       unique: true,
       required: [true, "El correo es necesario!"],
     },
+    password: {
+      type: String,
+      required: [true, "La contraseña es requerida"],
+    },
     profile_picture: String,
     cell_number: String,
     phone_number: String,
@@ -29,7 +38,16 @@ let memberSchema = new Schema(
         message: "{VALUE} no es un rol válido",
       },
     },
-    dni: String,
+    dni: {
+      type: String,
+      unique: true,
+      required: [true, "El dni es necesario!"],
+    },
+    role: {
+      type: String,
+      default: "USER",
+      enum: validRoles,
+    },
   },
   {
     timestamps: true,

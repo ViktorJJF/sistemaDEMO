@@ -1,4 +1,6 @@
 const Member = require("../models/Members.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const list = (req, res) => {
   Member.find().exec((err, payload) => {
     if (err) {
@@ -13,8 +15,10 @@ const list = (req, res) => {
     });
   });
 };
-const create = (req, res) => {
+const create = async (req, res) => {
   let body = req.body;
+  //default password on create
+  body.password = await bcrypt.hash(body.dni, parseInt(process.env.SALTROUNDS));
   let member = new Member(body);
   member.save((err, payload) => {
     if (err) {
@@ -90,9 +94,98 @@ const deletes = (req, res) => {
   });
 };
 
+const getUser = (req, res) => {
+  if (req.isAuthenticated()) {
+    console.log("el usuario esta autenticado");
+    return res.json({
+      ok: true,
+      payload: req.user,
+    });
+  }
+  return res.json({
+    ok: false,
+    err: {
+      message: "Usuario no logeado",
+    },
+  });
+};
+
+const logout = (req, res) => {
+  req.logout();
+  res.json({
+    ok: true,
+  });
+};
+
+const login = (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  Member.findOne(
+    {
+      email,
+    },
+    (err, userDB) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          message: "Algo salió mal",
+          err,
+        });
+      }
+      if (!userDB) {
+        return res.status(400).json({
+          ok: false,
+          err: {
+            message: "El usuario con ese correo no existe",
+          },
+        });
+      }
+      let passwordIsValid = bcrypt.compareSync(password, userDB.password);
+      if (!passwordIsValid) {
+        return res.status(400).json({
+          ok: false,
+          err: {
+            message: "Contraseña incorrecta",
+          },
+        });
+      }
+      let token = jwt.sign(
+        {
+          usuario: userDB,
+        },
+        process.env.SEED,
+        {
+          expiresIn: parseInt(process.env.EXPIRESIN),
+        }
+      );
+      console.log("antes del inicio: ", userDB._id);
+      req.login(
+        {
+          user: userDB,
+        },
+        (err) => {
+          if (err) {
+            return console.log(err);
+          }
+          console.log("inicio de sesion exitoso");
+        }
+      );
+      res.json({
+        ok: true,
+        message: "Bienvenido",
+        user: userDB,
+        token,
+      });
+    }
+  );
+};
+
 module.exports = {
   list,
   create,
   update,
   deletes,
+  getUser,
+  login,
+  logout,
 };

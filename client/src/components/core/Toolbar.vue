@@ -9,7 +9,7 @@
     <!-- <span class="title ml-3 mr-5"></span> -->
     <v-spacer></v-spacer>
     <v-menu v-if="$store.state.user" offset-y>
-      <template v-slot:activator="{ on }">
+      <!-- <template v-slot:activator="{ on }">
         <v-btn icon v-on="on">
           <v-badge color="red" @click>
             <template v-slot:badge>
@@ -18,7 +18,7 @@
             <v-icon>mdi-email</v-icon>
           </v-badge>
         </v-btn>
-      </template>
+      </template> -->
       <v-list v-for="(alertMessage, i) in $store.state.stockAlert" :key="i">
         <v-list-item>
           Tu producto {{ alertMessage.productName }} está por agortarse. (
@@ -61,7 +61,7 @@ export default {
       },
       set(newValue) {
         this.$store.state.toolbar.drawerIcon = newValue;
-      }
+      },
     },
     user() {
       return this.$store.state.user.email;
@@ -71,22 +71,15 @@ export default {
     },
     logiaColor() {
       return this.$store.state.logiaModule.logia.color;
-    }
+    },
   },
   methods: {
     logout() {
-      // this.$store
-      //   .dispatch("logout")
-      //   .then(res => {
-      //     console.log("se pusheara el login");
-      //     this.$router.push({ name: "login" });
-      //   })
-      //   .catch(err => {
-      //     console.log("algo salio mal en logout");
-      //   });
-      this.$router.push({ name: "login" });
-    }
-  }
+      this.$store.dispatch("authModule/logout").then(() => {
+        this.$router.push({ name: "login" });
+      });
+    },
+  },
 };
 </script>
 

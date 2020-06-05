@@ -48,7 +48,10 @@ const create = async (req, res) => {
   let user = new User({
     first_name: body.first_name,
     last_name: body.last_name,
-    password: await bcrypt.hash(body.password, process.env.SALTROUNDS),
+    password: await bcrypt.hash(
+      body.password,
+      parseInt(process.env.SALTROUNDS)
+    ),
     email: body.email,
     img: body.img,
     role: body.role,
@@ -181,9 +184,9 @@ const login = (req, res) => {
         {
           usuario: userDB,
         },
-        config.seed,
+        process.env.SEED,
         {
-          expiresIn: config.expiresIn,
+          expiresIn: parseInt(process.env.EXPIRESIN),
         }
       );
       console.log("antes del inicio: ", userDB._id);

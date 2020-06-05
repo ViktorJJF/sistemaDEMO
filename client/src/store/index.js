@@ -17,15 +17,15 @@ export const store = new Vuex.Store({
     ranks: [
       {
         id: 2,
-        name: "Aprendiz",
+        name: "APRENDIZ",
       },
       {
         id: 3,
-        name: "Compañero",
+        name: "COMPAÑERO",
       },
       {
         id: 4,
-        name: "Maestro",
+        name: "MAESTRO",
       },
     ],
     countries: [
