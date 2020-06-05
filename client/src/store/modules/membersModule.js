@@ -6,7 +6,7 @@ const module = {
   namespaced: true,
   state: {
     members: [],
-    totalMembers: 0
+    totalMembers: 0,
   },
   actions: {
     fetchMembers({ commit, state }) {
@@ -15,12 +15,12 @@ const module = {
         else {
           api
             .fetchMembers()
-            .then(response => {
+            .then((response) => {
               // commit(types.TOTAL_USERS, response.data.totalDocs)
-              commit("fetchMembers", response.data);
+              commit("fetchMembers", response.data.payload);
               resolve();
             })
-            .catch(error => {
+            .catch((error) => {
               console.log("se produjo un error");
               handleError(error, commit, reject);
             });
@@ -28,46 +28,39 @@ const module = {
       });
     },
     editMember({ commit }, { id, data }) {
-      // return new Promise((resolve, reject) => {
-      //   // const data = {
-      //   //   // type your data to update
-      //   // };
-      //   //type your id and data
-      //   // api
-      //   //   .editMember(payload._id, data)
-      //   //   .then(response => {
-      //   //     if (response.status === 200) {
-
-      //   //     }
-      //   //   })
-      //   //   .catch(error => {
-      //   //     handleError(error, commit, reject);
-      //   //   });
-      //   commit("loadingModule/showLoading", true, { root: true });
-      //   buildSuccess("Registro guardado con éxito", commit, resolve);
-      //   console.log("se hara commit a: ", id, data);
-      //   resolve();
-      // });
-      commit("editMember", {
-        id,
-        data
+      return new Promise((resolve, reject) => {
+        api
+          .editMember(id, data)
+          .then((res) => {
+            let data = res.data.payload;
+            commit("loadingModule/showLoading", true, { root: true });
+            buildSuccess("Registro guardado con éxito", commit, resolve);
+            commit("editMember", {
+              id,
+              data,
+            });
+            resolve();
+          })
+          .catch((error) => {
+            handleError(error, commit, reject);
+          });
       });
     },
     deleteMember({ commit }, id) {
       return new Promise((resolve, reject) => {
         buildSuccess("Eliminado con éxito", commit, resolve);
       });
-    }
+    },
   },
   mutations: {
     fetchMembers(state, members) {
-      members.forEach(member => {
+      members.forEach((member) => {
         member["paymentState"] = Math.random() >= 0.5;
       });
       state.members = members;
     },
     editMember(state, { id, data }) {
-      let indexToUpdate = state.members.findIndex(member => member._id == id);
+      let indexToUpdate = state.members.findIndex((member) => member._id == id);
       console.log(
         "se modificara: ",
         state.members[indexToUpdate],
@@ -75,26 +68,26 @@ const module = {
         data
       );
       state.members.splice(indexToUpdate, 1, {
-        ...data
+        ...data,
       });
       console.log("ahora state es: ", state.members);
     },
     [types.TOTAL_MEMBERS](state, value) {
       state.totalMembers = value;
-    }
+    },
   },
   getters: {
-    getTotalMembers: state => {
+    getTotalMembers: (state) => {
       return state.members.length;
     },
-    getMemberByDNI: state => dni => {
-      let member = state.members.find(member => member.dni == dni);
+    getMemberByDNI: (state) => (dni) => {
+      let member = state.members.find((member) => member.dni == dni);
       if (member) {
         return member;
       }
       return {};
-    }
-  }
+    },
+  },
 };
 
 export default module;

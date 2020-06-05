@@ -1,28 +1,35 @@
-const config = require('./config');
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
-const session = require('express-session'); //session managment
-const MongoStore = require('connect-mongo')(session);
-const passport = require('passport');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
+const session = require("express-session"); //session managment
+const MongoStore = require("connect-mongo")(session);
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+
+// dotenv
+
+require("dotenv").config();
 
 //Middleware
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({
-    extended: false
-}))
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
 
 // parse application/json
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors({
-    credentials: true
-}));
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 
 //session managment
 //initializing session
@@ -32,50 +39,58 @@ app.use(cors({
 //     saveUninitialized: false,
 //     // cookie: { secure: true }
 // }))
-mongoose.connect(config.dbString, {
-    useNewUrlParser: true
-}, (err, res) => {
+mongoose.connect(
+  process.env.DBSTRING,
+  {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  },
+  (err, res) => {
     if (err) throw err;
-    console.log('DB online ONLINE');
-});
+    console.log("DB online ONLINE");
+  }
+);
 
-app.use(session({
-    secret: 'ijegoierjgoiemrjgoiem',
+app.use(
+  session({
+    secret: "ijegoierjgoiemrjgoiem",
     store: new MongoStore({
-        mongooseConnection: mongoose.connection
+      mongooseConnection: mongoose.connection,
     }),
     resave: false,
     saveUninitialized: true,
     vcookie: {
-        httpOnly: true,
-        maxAge: 2419200000
-    } // configure when sessions expires
-}));
+      httpOnly: true,
+      maxAge: 2419200000,
+    }, // configure when sessions expires
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function (user_id, done) {
-    done(null, user_id);
+  done(null, user_id);
 });
 
 passport.deserializeUser(function (user_id, done) {
-    done(null, user_id);
+  done(null, user_id);
 });
 
-
-const routes = require('./routes/api/api.js');
-app.use('/api', routes);
+const routes = require("./routes/api/api.js");
+app.use("/api", routes);
 
 //Handle Production
-if (process.env.NODE_ENV === 'production') {
-    //static folder
-    app.use(express.static(__dirname + '/public'));
-    //Handle SPA
-    app.get(/.*/, (req, res) => {
-        res.sendFile(__dirname + '/public/index.html')
-    });
+if (process.env.NODE_ENV === "production") {
+  //static folder
+  app.use(express.static(__dirname + "/public"));
+  //Handle SPA
+  app.get(/.*/, (req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+  });
 }
 process.env.PORT = process.env.PORT || 3000;
 app.listen(process.env.PORT, () => {
-    console.log(`Server starting on port ${process.env.PORT}`);
+  console.log(`Server starting on port ${process.env.PORT}`);
 });

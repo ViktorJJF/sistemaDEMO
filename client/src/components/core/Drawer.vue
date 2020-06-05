@@ -77,41 +77,41 @@ export default {
       selectedItemExpansive: null,
       selectedItemStyle: {},
       items: [
-        {
-          icon: "mdi-chart-bar",
-          text: "Dashboard",
-          to: "statistics"
-        },
+        // {
+        //   icon: "mdi-chart-bar",
+        //   text: "Dashboard",
+        //   to: "statistics"
+        // },
         {
           icon: "mdi-account-card-details",
           text: "Miembros",
-          to: "members"
+          to: "members",
         },
         // {
         //   icon: "mdi-format-list-checks",
         //   text: "Postulantes",
         //   to: "postulants"
         // },
-        {
-          icon: "mdi-format-list-checks",
-          text: "Control de pagos",
-          to: "paymentsControl"
-        },
+        // {
+        //   icon: "mdi-format-list-checks",
+        //   text: "Control de pagos",
+        //   to: "paymentsControl"
+        // },
         {
           icon: "mdi-format-list-checks",
           text: "Control de Asistencias",
-          to: "assistancesControl"
-        }
+          to: "assistancesControl",
+        },
         // {
         //   icon: "mdi-format-list-checks",
         //   text: "Reportes",
         //   to: "reportes"
         // }
-        // {
-        //   icon: "mdi-format-list-checks",
-        //   text: "test",
-        //   to: "test"
-        // }
+        {
+          icon: "mdi-format-list-checks",
+          text: "test",
+          to: "test",
+        },
       ],
       expansionItems: [
         {
@@ -121,16 +121,16 @@ export default {
             {
               icon: "mdi-format-list-checks",
               title: "Personalización",
-              to: "personalization"
+              to: "personalization",
             },
             {
               icon: "mdi-format-list-checks",
               title: "Suscripción",
-              to: "suscription"
-            }
-          ]
-        }
-      ]
+              to: "suscription",
+            },
+          ],
+        },
+      ],
     };
   },
   computed: {
@@ -140,14 +140,14 @@ export default {
       },
       set(newValue) {
         this.$store.state.toolbar.drawerIcon = newValue;
-      }
+      },
     },
     user() {
       return this.$store.getters.getFullNameUser;
     },
     email() {
       return "Logia Masonica Francisco de Paula Gonzales Vigil";
-    }
+    },
   },
   methods: {
     selectItem(i) {
@@ -157,8 +157,8 @@ export default {
     selectItemExansive(i) {
       this.selectedItemExpansive = i;
       this.selectedItem = -1;
-    }
-  }
+    },
+  },
 };
 </script>
 

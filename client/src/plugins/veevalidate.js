@@ -1,14 +1,49 @@
-// import Vue from "vue";
-// import VeeValidate from "vee-validate";
-// // import en from 'vee-validate/dist/locale/en'
-// // import es from 'vee-validate/dist/locale/es'
+import Vue from "vue";
+import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
+import { required, confirmed, length, email } from "vee-validate/dist/rules";
 
-// // const veeValidateConfig = {
-// //     locale: JSON.parse(localStorage.getItem('locale')) || 'en',
-// //     dictionary: {
-// //         en,
-// //         es
-// //     }
-// // }
+extend("required", {
+  ...required,
+  message: "Este campo es requerido",
+});
 
-// Vue.use(VeeValidate);
+extend("email", {
+  ...email,
+  message: "Este campo debe ser un email válido",
+});
+
+extend("confirmed", {
+  ...confirmed,
+  message: "Las contraseñas no concuerdan",
+});
+
+extend("length", {
+  ...length,
+  message: "This field must have 2 options",
+});
+
+extend("decimal", {
+  validate: (value, { decimals = "*", separator = "." } = {}) => {
+    if (value === null || value === undefined || value === "") {
+      return {
+        valid: false,
+      };
+    }
+    if (Number(decimals) === 0) {
+      return {
+        valid: /^-?\d*$/.test(value),
+      };
+    }
+    const regexPart = decimals === "*" ? "+" : `{1,${decimals}}`;
+    const regex = new RegExp(
+      `^[-+]?\\d*(\\${separator}\\d${regexPart})?([eE]{1}[-]?\\d+)?$`
+    );
+    return {
+      valid: regex.test(value),
+    };
+  },
+  message: `Este campo debe ser un número válido`,
+});
+
+Vue.component("ValidationObserver", ValidationObserver);
+Vue.component("ValidationProvider", ValidationProvider);

@@ -51,160 +51,148 @@
                         <span class="headline">{{ formTitle }}</span>
                       </v-card-title>
                       <v-divider></v-divider>
-                      <v-container class="pa-5">
-                        <v-row dense>
-                          <v-col cols="12" sm="4">
-                            <v-card>
-                              <v-container fluid>
-                                <image-uploader
-                                  :img="editedItem.profile_picture"
-                                ></image-uploader>
-                                <b class="center">
-                                  {{ editedItem.first_name }}
-                                  {{ editedItem.last_name }}
-                                </b>
-                                <v-select
-                                  dark
-                                  background-color="primary"
-                                  placeholder="Selecciona rango"
-                                  item-text="name"
-                                  dense
-                                  v-model="editedItem.rank"
-                                  :items="ranks"
-                                  item-value="_id"
-                                  outlined
-                                ></v-select>
-                              </v-container>
-                            </v-card>
-                          </v-col>
-                          <v-col cols="12" sm="8">
-                            <v-card>
-                              <v-container fluid>
-                                <h3>Detalles del usuario</h3>
-                                <v-row dense>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Nombres
-                                    </p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.first_name"
-                                      placeholder="Nombres"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Apellidos
-                                    </p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.last_name"
-                                      placeholder="Apellidos"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Correo
-                                    </p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.email"
-                                      placeholder="Correo"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Teléfono
-                                    </p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.cell_number"
-                                      placeholder="+33 680 807 5770"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Celular
-                                    </p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.phone_number"
-                                      placeholder="(800) 3537342"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      País
-                                    </p>
-                                    <v-select
-                                      placeholder="Selecciona rango"
-                                      item-text="name"
-                                      dense
-                                      v-model="editedItem.country"
-                                      :items="countries"
-                                      item-value="_id"
-                                      outlined
-                                    ></v-select>
-                                  </v-col>
-                                  <v-col cols="12" sm="6" md="6">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Ciudad
-                                    </p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.city"
-                                      placeholder="Selecciona una ciudad"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12" sm="12" md="12">
-                                    <p class="body-1 font-weight-bold mb-0">
-                                      Dirección
-                                    </p>
-                                    <v-text-field
-                                      dense
-                                      clearable
-                                      class
-                                      outlined
-                                      v-model="editedItem.address"
-                                      placeholder="059 2nd Hill"
-                                    ></v-text-field>
-                                  </v-col>
-                                </v-row>
-                              </v-container>
-                            </v-card>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                      <v-card-actions>
-                        <div class="flex-grow-1"></div>
-                        <v-btn outlined color="error" text @click="close"
-                          >Cancelar</v-btn
-                        >
-                        <v-btn
-                          :loading="loadingButton"
-                          color="success"
-                          @click="save"
-                          >Guardar</v-btn
-                        >
-                      </v-card-actions>
+                      <ValidationObserver ref="obs" v-slot="{ passes }">
+                        <v-form>
+                          <v-container class="pa-5">
+                            <v-row dense>
+                              <v-col cols="12" sm="4">
+                                <v-container fluid>
+                                  <image-uploader
+                                    :img="editedItem.profile_picture"
+                                  ></image-uploader>
+                                  <b class="center">
+                                    {{ editedItem.first_name }}
+                                    {{ editedItem.last_name }}
+                                  </b>
+                                  <VSelectWithValidation
+                                    :dark="true"
+                                    backgroundColor="primary"
+                                    rules="required"
+                                    :items="ranks"
+                                    v-model="editedItem.rank"
+                                    label="Selecciona una rango"
+                                    itemText="name"
+                                    itemValue="_id"
+                                  />
+                                </v-container>
+                              </v-col>
+                              <v-col cols="12" sm="8">
+                                <v-container fluid>
+                                  <h3>Detalles del usuario</h3>
+                                  <v-row dense>
+                                    <v-col cols="12" sm="6" md="6">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        Nombres
+                                      </p>
+                                      <VTextFieldWithValidation
+                                        rules="required"
+                                        v-model="editedItem.first_name"
+                                        label="Nombres"
+                                      />
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        Apellidos
+                                      </p>
+                                      <VTextFieldWithValidation
+                                        rules="required"
+                                        v-model="editedItem.last_name"
+                                        label="Apellidos"
+                                      />
+                                    </v-col>
+                                    <v-col cols="12" sm="12" md="12">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        Correo
+                                      </p>
+                                      <VTextFieldWithValidation
+                                        rules="required|email"
+                                        v-model="editedItem.email"
+                                        label="Correo"
+                                      />
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        Teléfono
+                                      </p>
+                                      <VTextFieldWithValidation
+                                        :rules="{
+                                          required: false,
+                                          decimal: true,
+                                        }"
+                                        v-model="editedItem.cell_number"
+                                        label="+33 680 807 5770"
+                                      />
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        Celular
+                                      </p>
+                                      <VTextFieldWithValidation
+                                        :rules="{
+                                          required: false,
+                                          decimal: true,
+                                        }"
+                                        v-model="editedItem.phone_number"
+                                        label="+51982745576"
+                                      />
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        País
+                                      </p>
+                                      <VSelectWithValidation
+                                        rules="required"
+                                        :items="countries"
+                                        v-model="editedItem.city"
+                                        label="Selecciona país"
+                                        itemText="name"
+                                        itemValue="_id"
+                                      />
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="6">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        Ciudad
+                                      </p>
+                                      <VSelectWithValidation
+                                        rules="required"
+                                        :items="cities"
+                                        v-model="editedItem.city"
+                                        label="Selecciona una ciudad"
+                                        itemText="name"
+                                        itemValue="_id"
+                                      />
+                                    </v-col>
+                                    <v-col cols="12" sm="12" md="12">
+                                      <p class="body-1 font-weight-bold mb-0">
+                                        Dirección
+                                      </p>
+                                      <VTextFieldWithValidation
+                                        :rules="{
+                                          required: { allowFalse: true },
+                                        }"
+                                        v-model="editedItem.address"
+                                        label="059 2nd Hill"
+                                      />
+                                    </v-col>
+                                  </v-row>
+                                </v-container>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                          <v-card-actions>
+                            <div class="flex-grow-1"></div>
+                            <v-btn outlined color="error" text @click="close"
+                              >Cancelar</v-btn
+                            >
+                            <v-btn
+                              :loading="loadingButton"
+                              color="success"
+                              @click="passes(save)"
+                              >Guardar</v-btn
+                            >
+                          </v-card-actions>
+                        </v-form>
+                      </ValidationObserver>
                     </v-card>
                   </v-dialog>
                 </v-col>
@@ -277,16 +265,20 @@ import XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ImageUploader from "@/components/common/ImageUploader";
+import VTextFieldWithValidation from "@/components/inputs/VTextFieldWithValidation";
+import VSelectWithValidation from "@/components/inputs/VSelectWithValidation";
 
 export default {
   components: {
     MaterialCard,
-    ImageUploader
+    ImageUploader,
+    VTextFieldWithValidation,
+    VSelectWithValidation,
   },
   filters: {
     dateFormat: function(value) {
       return dateFormat(value);
-    }
+    },
   },
   data: () => ({
     dataTableLoading: true,
@@ -303,14 +295,14 @@ export default {
         align: "left",
         sortable: false,
         value: "dni",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Perfil",
         align: "left",
         sortable: false,
         value: "profile_picture",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Nombres",
@@ -318,58 +310,58 @@ export default {
         sortable: true,
         value: "first_name",
         class: "colored",
-        width: 150
+        width: 150,
       },
       {
         text: "Apellidos",
         align: "left",
         sortable: true,
         value: "last_name",
-        width: 150
+        width: 150,
       },
       {
         text: "Correo",
         align: "left",
         sortable: false,
         value: "email",
-        class: "customHeader"
+        class: "customHeader",
       },
       {
         text: "Celular",
         align: "left",
         sortable: false,
-        value: "cell_number"
+        value: "cell_number",
       },
       {
         text: "Dirección",
         align: "left",
         sortable: false,
-        value: "address"
+        value: "address",
       },
       {
         text: "País",
         align: "left",
         sortable: false,
-        value: "country"
+        value: "country",
       },
       {
         text: "Ciudad",
         align: "left",
         sortable: false,
-        value: "city"
+        value: "city",
       },
       {
         text: "Rango",
         align: "left",
         sortable: false,
-        value: "rank"
+        value: "rank",
       },
-      { text: "Acciones", value: "action", sortable: false }
+      { text: "Acciones", value: "action", sortable: false },
     ],
     // members: [],
     editedIndex: -1,
     editedItem: {},
-    defaultItem: {}
+    defaultItem: {},
   }),
   computed: {
     formTitle() {
@@ -381,14 +373,17 @@ export default {
     countries() {
       return this.$store.state.countries;
     },
+    cities() {
+      return this.$store.state.cities;
+    },
     members() {
       return this.$store.state.membersModule.members;
-    }
+    },
   },
   watch: {
     dialog(val) {
       val || this.close();
-    }
+    },
   },
   mounted() {
     this.initialData();
@@ -409,7 +404,7 @@ export default {
     exportPDF() {
       // Default export is a4 paper, portrait, using milimeters for units
       var doc = new jsPDF({
-        orientation: "landscape"
+        orientation: "landscape",
       });
       doc.text(
         "Listado de miembros de la logia: Francisco de Paula Gonzáles Vigil N° 38",
@@ -432,8 +427,8 @@ export default {
           { header: "Dirección", dataKey: "address" },
           { header: "País", dataKey: "country" },
           { header: "Ciudad", dataKey: "city" },
-          { header: "Rango", dataKey: "rank" }
-        ]
+          { header: "Rango", dataKey: "rank" },
+        ],
       });
       doc.save("reporte_miembros_logia.pdf");
     },
@@ -465,7 +460,7 @@ export default {
         //update member
         this.$store.dispatch("membersModule/editMember", {
           id: this.members[this.editedIndex]._id,
-          data: this.editedItem
+          data: this.editedItem,
         });
         this.close();
       } else {
@@ -473,8 +468,8 @@ export default {
         this.members.push(this.editedItem);
         this.close();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

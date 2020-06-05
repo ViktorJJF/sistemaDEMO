@@ -1,14 +1,14 @@
 export default {
   fetchMembers() {
-    return axios.get("/fake/members.json");
+    return axios.get("/api/members");
   },
   editMember(id, payload) {
-    return axios.put(`/members/${id}`, payload);
+    return axios.put(`/api/members/${id}`, payload);
   },
   saveMember(payload) {
-    return axios.post("/members/", payload);
+    return axios.post("/api/members", payload);
   },
   deleteMember(id) {
-    return axios.delete(`/members/${id}`);
-  }
+    return axios.delete(`/api/members/${id}`);
+  },
 };

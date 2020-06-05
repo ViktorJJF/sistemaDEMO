@@ -1,92 +1,60 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 //Controllers
-const typesController = require('../../controllers/typesController');
-const brandsController = require('../../controllers/brandsController');
-const colorsController = require('../../controllers/colorsController');
-const productsController = require('../../controllers/productsController');
-const ordersController = require('../../controllers/ordersController');
-const orderDetailsController = require('../../controllers/orderDetailsController');
-const purchasesController = require('../../controllers/purchasesController.js');
-const purchaseDetailsController = require('../../controllers/purchaseDetailsController.js');
-const usersController = require('../../controllers/usersController.js');
+const membersController = require("../../controllers/membersController");
+const assistancesController = require("../../controllers/assistancesController.js");
+const eventsController = require("../../controllers/eventsController.js");
+const usersController = require("../../controllers/usersController.js");
 
 //tools
-const dateTools = require("../../tools/dateTools.js")
+const dateTools = require("../../tools/dateTools.js");
 
 //sessions
-router.get('/session', (req, res) => {
-    console.log("sesion: ", req.cookies);
-    console.log("sesion usuario: ", req.user);
-    console.log("sesion: ", req.isAuthenticated());
-    if (req.isAuthenticated()) {
-        return res.json({
-            isAuthenticated: true,
-            activeSession: req.user
-        });
-    }
+router.get("/session", (req, res) => {
+  console.log("sesion: ", req.cookies);
+  console.log("sesion usuario: ", req.user);
+  console.log("sesion: ", req.isAuthenticated());
+  if (req.isAuthenticated()) {
     return res.json({
-        isAuthenticated: false
-    })
+      isAuthenticated: true,
+      activeSession: req.user,
+    });
+  }
+  return res.json({
+    isAuthenticated: false,
+  });
 });
-router.get('/session/list', (req, res) => {
-    
-    console.log("sesiones activas: ", req.sessionStore);
-    return res.json({
-        sesions: req.session
-    })
+router.get("/session/list", (req, res) => {
+  console.log("sesiones activas: ", req.sessionStore);
+  return res.json({
+    sesions: req.session,
+  });
 });
 
-//CRUD types
-router.get('/types/list', typesController.list);
-router.post('/types/create', typesController.create);
-router.put('/types/update/:id', typesController.update);
-router.delete('/types/delete/:id', typesController.deletes);
-//CRUD brands
-router.get('/brands/list', brandsController.list);
-router.post('/brands/create', brandsController.create);
-router.put('/brands/update/:id', brandsController.update);
-router.delete('/brands/delete/:id', brandsController.deletes);
-//CRUD colors
-router.get('/colors/list', colorsController.list);
-router.post('/colors/create', colorsController.create);
-router.put('/colors/update/:id', colorsController.update);
-router.delete('/colors/delete/:id', colorsController.deletes);
-//CRUD products
-router.get('/products/list', productsController.list);
-router.post('/products/create', productsController.create);
-router.put('/products/update/:id', productsController.update);
-router.delete('/products/delete/:id', productsController.deletes);
-//CRUD orders
-router.get('/orders/list', ordersController.list);
-router.post('/orders/create', ordersController.create);
-router.put('/orders/update/:id', ordersController.update);
-router.delete('/orders/delete/:id', ordersController.deletes);
-router.get('/orders/count', ordersController.count);
-router.get('/orders/count-by-date', ordersController.countByDate);
-//CRUD orderDetails
-router.get('/order-details/list', orderDetailsController.list);
-router.post('/order-details/create', orderDetailsController.create);
-router.put('/order-details/update/:id', orderDetailsController.update);
-router.delete('/order-details/delete/:id', orderDetailsController.deletes);
-//CRUD purchases
-router.get('/purchases/list', purchasesController.list);
-router.post('/purchases/create', purchasesController.create);
-router.put('/purchases/update/:id', purchasesController.update);
-router.delete('/purchases/delete/:id', purchasesController.deletes);
-router.get('/purchases/count', purchasesController.count);
-//CRUD purchaseDetails
-router.get('/purchase-details/list', purchaseDetailsController.list);
-router.post('/purchase-details/create', purchaseDetailsController.create);
-router.put('/purchase-details/update/:id', purchaseDetailsController.update);
-router.delete('/purchase-details/delete/:id', purchaseDetailsController.deletes);
+//CRUD events
+router.get("/events", eventsController.list);
+router.post("/events", eventsController.create);
+router.put("/events/:id", eventsController.update);
+router.delete("/events/:id", eventsController.deletes);
+
+//CRUD assistances
+router.get("/assistances", assistancesController.list);
+router.post("/assistances", assistancesController.create);
+router.put("/assistances/:id", assistancesController.update);
+router.delete("/assistances/:id", assistancesController.deletes);
+
+//CRUD members
+router.get("/members", membersController.list);
+router.post("/members", membersController.create);
+router.put("/members/:id", membersController.update);
+router.delete("/members/:id", membersController.deletes);
 //CRUD USERS
-router.get('/users/list', usersController.list);
-router.post('/users/create', usersController.create);
-router.put('/users/update/:id', usersController.update);
-router.delete('/users/delete/:id', usersController.deletes);
-router.post('/login', usersController.login);
-router.post('/users/logged', usersController.getUser);
-router.get('/logout', usersController.logout);
+router.get("/users/list", usersController.list);
+router.post("/users/create", usersController.create);
+router.put("/users/update/:id", usersController.update);
+router.delete("/users/delete/:id", usersController.deletes);
+router.post("/login", usersController.login);
+router.post("/users/logged", usersController.getUser);
+router.get("/logout", usersController.logout);
 module.exports = router;
