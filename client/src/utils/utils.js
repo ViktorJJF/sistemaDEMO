@@ -2,6 +2,21 @@ import axios from "axios";
 import { isPast, format } from "date-fns";
 import { store } from "@/store";
 
+export let msToTime = (duration) => {
+  var milliseconds = parseInt((duration % 1000) / 100),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  return (
+    (hours > 0 ? (hours != 1 ? hours + " horas " : hours + " hora ") : "") +
+    (minutes > 0 ? minutes + " minutos" : "") +
+    (seconds > 0 ? seconds + " segundos" : "")
+  );
+  // seconds +
+  // " segundos"
+};
+
 export const isLogged = () => {
   console.log("ejectuando logged");
   return new Promise((resolve, reject) => {

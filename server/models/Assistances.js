@@ -19,6 +19,7 @@ let assistanceSchema = new Schema(
         values: ["A", "T", "F"],
         message: "{VALUE} no es un estado de asistencia válido",
       },
+      default: "F",
     },
   },
   {

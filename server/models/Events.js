@@ -9,7 +9,11 @@ let eventSchema = new Schema(
     },
     datetime: {
       type: Date,
-      default: new Date(),
+      default: Date.now,
+    },
+    duration: {
+      type: Number,
+      default: 2 * 60 * 60 * 1000,
     },
     tolerance: {
       type: Number,

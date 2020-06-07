@@ -33,7 +33,7 @@
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
         <v-btn text color="white" dark v-on="on">
-          admin@gmail.com
+          {{ user }}
           <v-icon>mdi-menu-down</v-icon>
         </v-btn>
       </template>
@@ -64,7 +64,7 @@ export default {
       },
     },
     user() {
-      return this.$store.state.user.email;
+      return this.$store.state.authModule.user.email;
     },
     logiaName() {
       return this.$store.getters["logiaModule/logiaFullName"];

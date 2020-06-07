@@ -20,12 +20,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(month,idx) in months" :key="month">
+                <tr v-for="(month, idx) in months" :key="month">
                   <td>
                     <b>{{ month }}</b>
                   </td>
                   <td>
-                    <v-icon color="success" v-if="payments[idx]">mdi-check-circle</v-icon>
+                    <v-icon color="success" v-if="payments[idx]"
+                      >mdi-check-circle</v-icon
+                    >
                     <v-icon color="error" v-else>mdi-close-circle</v-icon>
                   </td>
                   <td>
@@ -61,12 +63,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(assistance,idy) in assistances" :key="idy">
+                <tr v-for="(assistance, idy) in assistances" :key="idy">
                   <td>
                     <b>{{ assistance.date | formatDate }}</b>
                   </td>
                   <td>
-                    <v-icon color="success" v-if="assistance.state">mdi-check-circle</v-icon>
+                    <v-icon color="success" v-if="assistance.state"
+                      >mdi-check-circle</v-icon
+                    >
                     <v-icon color="error" v-else>mdi-close-circle</v-icon>
                   </td>
                   <td>
@@ -95,7 +99,7 @@ export default {
   filters: {
     formatDate: function(value) {
       return format(value, "MM/dd/yyyy");
-    }
+    },
   },
   data() {
     return {
@@ -111,7 +115,7 @@ export default {
         "Septiembre",
         "Octubre",
         "Noviembre",
-        "Diciembre"
+        "Diciembre",
       ],
       payments: [
         true,
@@ -125,7 +129,7 @@ export default {
         true,
         false,
         false,
-        false
+        false,
       ],
       assistances: [
         { date: new Date(2019, 1, 21), state: true },
@@ -133,10 +137,10 @@ export default {
         { date: new Date(2019, 2, 4), state: false },
         { date: new Date(2019, 2, 11), state: false },
         { date: new Date(2019, 2, 18), state: false },
-        { date: new Date(2019, 2, 25), state: false }
-      ]
+        { date: new Date(2019, 2, 25), state: false },
+      ],
     };
-  }
+  },
 };
 </script>
 

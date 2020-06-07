@@ -5,18 +5,18 @@ const getters = {
 };
 
 const mutations = {
-  showLoading(state, value) {
+  showLoading(state, value = true) {
     state.loading = value;
-  }
+  },
 };
 
 const state = {
-  loading: false
+  loading: false,
 };
 
 export default {
   namespaced,
   state,
   getters,
-  mutations
+  mutations,
 };

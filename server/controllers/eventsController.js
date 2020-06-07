@@ -1,17 +1,33 @@
 const Event = require("../models/Events.js");
+const { startOfDay, endOfDay } = require("date-fns");
 const list = (req, res) => {
-  Event.find().exec((err, payload) => {
-    if (err) {
-      return res.status(400).json({
-        ok: false,
-        err,
+  let { from, to } = req.query;
+  console.log("llego esto: ", req.query);
+  let conditions = {};
+  if (from) conditions.from = from;
+  if (to) conditions.to = to;
+  if (!from && !to)
+    conditions = {
+      createdAt: {
+        $gte: startOfDay(new Date()),
+        $lte: endOfDay(new Date()),
+      },
+    };
+  Event.find({})
+    .sort({ datetime: "desc" })
+    .limit(5)
+    .exec((err, payload) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err,
+        });
+      }
+      res.json({
+        ok: true,
+        payload,
       });
-    }
-    res.json({
-      ok: true,
-      payload,
     });
-  });
 };
 const create = (req, res) => {
   let body = req.body;
