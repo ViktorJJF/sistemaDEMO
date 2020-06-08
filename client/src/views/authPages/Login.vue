@@ -39,13 +39,14 @@
               type="password"
             />
             <v-btn
+              :loading="loading"
               class="ma-5"
               color="info"
               lass="fadeIn fourth"
               value="Ingresar"
               @click="passes(login)"
-              >Ingresar</v-btn
-            >
+              >Ingresar
+            </v-btn>
           </v-form>
         </ValidationObserver>
       </div>
@@ -61,12 +62,14 @@ export default {
   },
   data() {
     return {
+      loading: false,
       user: { email: "", password: "" },
     };
   },
   methods: {
     login() {
       let user = this.user;
+      this.loading = true;
       this.$store
         .dispatch("authModule/login", user)
         .then((res) => {
@@ -81,7 +84,8 @@ export default {
           //   text: err.response.data,
           //   color: "error",
           // });
-        });
+        })
+        .finally(() => (this.loading = false));
     },
   },
 };

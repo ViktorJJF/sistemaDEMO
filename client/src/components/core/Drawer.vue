@@ -28,8 +28,9 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title v-text="item.text" />
+            {{ item.text }}
           </v-list-item-content>
+          <v-chip small color="info" v-if="item.role === 'ADMIN'">ADMIN</v-chip>
         </v-list-item>
       </template>
       <!-- expansion menu -->
@@ -86,6 +87,7 @@ export default {
           icon: "mdi-format-list-checks",
           text: "Miembros",
           to: "members",
+          role: "ADMIN",
         },
         // {
         //   icon: "mdi-format-list-checks",
@@ -101,6 +103,13 @@ export default {
           icon: "mdi-format-list-checks",
           text: "Control de Asistencias",
           to: "assistancesControl",
+          role: "USER",
+        },
+        {
+          icon: "mdi-account",
+          text: "Perfil de Usuario",
+          to: "userProfile",
+          role: "USER",
         },
         // {
         //   icon: "mdi-format-list-checks",
@@ -114,22 +123,22 @@ export default {
         // },
       ],
       expansionItems: [
-        {
-          icon: "mdi-settings",
-          text: "Ajustes",
-          items: [
-            {
-              icon: "mdi-format-list-checks",
-              title: "Personalización",
-              to: "personalization",
-            },
-            {
-              icon: "mdi-format-list-checks",
-              title: "Suscripción",
-              to: "suscription",
-            },
-          ],
-        },
+        // {
+        //   icon: "mdi-settings",
+        //   text: "Ajustes",
+        //   items: [
+        //     {
+        //       icon: "mdi-format-list-checks",
+        //       title: "Personalización",
+        //       to: "personalization",
+        //     },
+        //     {
+        //       icon: "mdi-format-list-checks",
+        //       title: "Suscripción",
+        //       to: "suscription",
+        //     },
+        //   ],
+        // },
       ],
     };
   },

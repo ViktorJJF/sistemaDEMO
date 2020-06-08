@@ -66,6 +66,11 @@ let routes = [
         component: require("@/views/Suscription").default,
       },
       {
+        path: "/perfil-usuario",
+        name: "userProfile",
+        component: require("@/views/UserProfile").default,
+      },
+      {
         path: "/test",
         name: "test",
         component: require("@/views/Test").default,
@@ -101,7 +106,7 @@ router.beforeEach(async (to, from, next) => {
   if (!store.state.authModule.user) {
     let loginStatus = await isLogged();
     if (loginStatus) {
-      store.state.authModule.user = loginStatus.user;
+      store.state.authModule.user = loginStatus;
     }
   }
 

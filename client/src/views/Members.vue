@@ -153,7 +153,7 @@
                                       <VSelectWithValidation
                                         rules="required"
                                         :items="countries"
-                                        v-model="editedItem.city"
+                                        v-model="editedItem.country"
                                         label="Selecciona país"
                                         itemText="name"
                                         itemValue="_id"
@@ -209,9 +209,9 @@
                 <v-btn small color="info" class="mr-3" @click="exportPDF"
                   >Exportar a PDF</v-btn
                 >
-                <v-btn small color="info" @click="exportExcel"
+                <!-- <v-btn small color="info" @click="exportExcel"
                   >Exportar a Excel</v-btn
-                >
+                > -->
               </v-row>
             </v-container>
           </template>

@@ -5,4 +5,10 @@ export default {
   logout(id) {
     return axios.get("/api/logout");
   },
+  editUser(id, payload) {
+    return axios.put(`/api/members/${id}`, payload);
+  },
+  updatePassword(id, newPassword) {
+    return axios.put(`/api/members/${id}/update-password`, { newPassword });
+  },
 };

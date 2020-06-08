@@ -51,6 +51,7 @@ router.put("/members/:id", membersController.update);
 router.delete("/members/:id", membersController.deletes);
 //CRUD USERS
 router.post("/login", membersController.login);
-router.post("/users/logged", membersController.getUser);
 router.get("/logout", membersController.logout);
+router.post("/users/logged", membersController.getUser);
+router.put("/members/:id/update-password", membersController.updatePassword);
 module.exports = router;

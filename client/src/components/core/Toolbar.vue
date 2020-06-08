@@ -64,7 +64,9 @@ export default {
       },
     },
     user() {
-      return this.$store.state.authModule.user.email;
+      return this.$store.state.authModule.user
+        ? this.$store.state.authModule.user.email
+        : "";
     },
     logiaName() {
       return this.$store.getters["logiaModule/logiaFullName"];

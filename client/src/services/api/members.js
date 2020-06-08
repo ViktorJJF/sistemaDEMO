@@ -3,6 +3,7 @@ export default {
     return axios.get("/api/members");
   },
   editMember(id, payload) {
+    console.log("llego esta data: ", id, payload);
     return axios.put(`/api/members/${id}`, payload);
   },
   saveMember(payload) {

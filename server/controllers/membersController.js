@@ -67,6 +67,8 @@ const update = (req, res) => {
           err,
         });
       }
+      //updating session
+      req.session.passport.user = payload;
       res.json({
         ok: true,
         message: "Member actualizado con éxito",
@@ -117,8 +119,38 @@ const logout = (req, res) => {
   });
 };
 
+const updatePassword = async (req, res) => {
+  let id = req.params.id;
+  let body = req.body;
+  let newPassword = await bcrypt.hash(
+    body.newPassword,
+    parseInt(process.env.SALTROUNDS)
+  );
+  Member.findOneAndUpdate(
+    { _id: id },
+    { password: newPassword },
+    {
+      new: true,
+      runValidators: true,
+    },
+    (err) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          message: "Algo salió mal",
+          err,
+        });
+      }
+      res.json({
+        ok: true,
+        message: "Contraseña actualizada con éxito",
+      });
+    }
+  );
+};
+
 const login = (req, res) => {
-  let email = req.body.email;
+  let email = req.body.email.toLowerCase();
   let password = req.body.password;
   Member.findOne(
     {
@@ -159,17 +191,12 @@ const login = (req, res) => {
         }
       );
       console.log("antes del inicio: ", userDB._id);
-      req.login(
-        {
-          user: userDB,
-        },
-        (err) => {
-          if (err) {
-            return console.log(err);
-          }
-          console.log("inicio de sesion exitoso");
+      req.login(userDB, (err) => {
+        if (err) {
+          return console.log(err);
         }
-      );
+        console.log("inicio de sesion exitoso");
+      });
       res.json({
         ok: true,
         message: "Bienvenido",
@@ -188,4 +215,5 @@ module.exports = {
   getUser,
   login,
   logout,
+  updatePassword,
 };

@@ -27,7 +27,7 @@
           </v-row>
           <v-row justify="center">
             <v-col cols="12" sm="7" class="text-center">
-              <b class="white--text">DNI: {{ user.dni }}</b>
+              <b class="white--text">DNI: {{ user ? user.dni : "" }}</b>
               <br />
               <b v-if="activeEvent" class="white--text"
                 >Evento activo: Reunión
@@ -217,6 +217,7 @@ export default {
     this.$store.commit("loadingModule/showLoading");
     this.getMemberByDNI(this.user.dni);
     await this.initialData();
+    console.log("se ejecuto Active event");
     this.getActiveEvent();
     this.assisted();
     this.$store.commit("loadingModule/showLoading", false);
@@ -246,17 +247,13 @@ export default {
     },
     async initialData() {
       try {
-        //asistencias
-        this.assistances = (
-          await api.listAssistances(this.user._id)
-        ).data.payload;
-        //eventos
-        this.events = (
-          await apiEvents.listEvents(
-            startOfDay(new Date()),
-            endOfDay(new Date())
-          )
-        ).data.payload;
+        let responses = await Promise.all([
+          api.listAssistances(this.user._id),
+          apiEvents.listEvents(startOfDay(new Date()), endOfDay(new Date())),
+        ]);
+        this.assistances = responses[0].data.payload;
+        this.events = responses[1].data.payload;
+        console.log("se cargaron todos los datos");
       } catch (err) {
         console.log("algo salio mal...", err);
       }

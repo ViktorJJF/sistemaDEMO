@@ -57,11 +57,11 @@ export const store = new Vuex.Store({
       },
       {
         id: 3,
-        name: "Chile",
+        name: "Moquegua",
       },
       {
         id: 4,
-        name: "Bolivia",
+        name: "Arequipa",
       },
     ],
   },
