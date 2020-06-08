@@ -19,3 +19,18 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Cordova
+/MasonCordova/platforms
+/MasonCordova/plugins
+/public/cordova.js
+
+# Cordova
+/MasonCordova/platforms
+/MasonCordova/plugins
+/public/cordova.js
+
+# Cordova
+/MasonCordova/platforms
+/MasonCordova/plugins
+/public/cordova.js
