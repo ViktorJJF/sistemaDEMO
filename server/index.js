@@ -68,7 +68,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  var allowedOrigins = [
+    "https://localhost:8080",
+    "http://localhost:8080",
+    "http://192.168.8.158:8080",
+    "https://192.168.8.158:8080",
+  ];
+  var origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  // res.header("Access-Control-Allow-Origin", "https://localhost:8080");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept"
