@@ -14,20 +14,15 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 //Middleware
-app.use(cors());
+// app.use(cors());
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Origin", req.headers.origin);
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, authorization"
   );
-  if ("OPTIONS" == req.method) {
-    res.send(200);
-  } else {
-    next();
-  }
+  res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
+  next();
 });
 
 // parse application/x-www-form-urlencoded
@@ -66,12 +61,16 @@ app.use(
     store: new MongoStore({
       mongooseConnection: mongoose.connection,
     }),
-    resave: false,
-    saveUninitialized: true,
-    vcookie: {
-      httpOnly: true,
-      maxAge: 2419200000,
-    }, // configure when sessions expires
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      // domain: ".domain.com",
+      maxAge: 24 * 6 * 60 * 10000,
+    },
+    // vcookie: {
+    //   httpOnly: true,
+    //   maxAge: 2419200000,
+    // }, // configure when sessions expires
   })
 );
 app.use(passport.initialize());
