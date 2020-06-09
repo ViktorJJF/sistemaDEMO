@@ -99,7 +99,7 @@ let routes = [
 
 const router = new Router({
   routes,
-  mode: "history",
+  // mode: "history",
 });
 
 router.beforeEach(async (to, from, next) => {

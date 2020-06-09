@@ -25,11 +25,12 @@ app.use(
 // parse application/json
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//   })
+// );
+app.use(cors());
 
 mongoose.connect(
   process.env.DBSTRING,
