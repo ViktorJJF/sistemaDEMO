@@ -105,7 +105,9 @@ const router = new Router({
 router.beforeEach(async (to, from, next) => {
   if (!store.state.authModule.user) {
     let loginStatus = await isLogged();
+    console.log("este es el valor de logger: ", loginStatus);
     if (loginStatus) {
+      console.log("esta logeado");
       store.state.authModule.user = loginStatus;
     }
   }

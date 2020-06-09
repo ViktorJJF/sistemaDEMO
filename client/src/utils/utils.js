@@ -1,4 +1,3 @@
-import axios from "axios";
 import { isPast, format } from "date-fns";
 import { store } from "@/store";
 
@@ -18,7 +17,6 @@ export let msToTime = (duration) => {
 };
 
 export const isLogged = () => {
-  console.log("ejectuando logged");
   return new Promise((resolve, reject) => {
     axios
       .post("/api/users/logged")

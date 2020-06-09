@@ -73,11 +73,8 @@ export default {
       this.$store
         .dispatch("authModule/login", user)
         .then((res) => {
-          // this.$store.dispatch("showSnackbar", {
-          //   text: res,
-          //   color: "success",
-          // });
-          // this.$router.push({ name: "dashboard" });
+          console.log("redireccionando");
+          this.$router.push({ name: "dashboard" });
         })
         .catch((err) => {
           // this.$store.dispatch("showSnackbar", {

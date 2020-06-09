@@ -20,7 +20,6 @@ const module = {
           .then((res) => {
             let data = res.data.payload;
             console.log("login completo!");
-            router.push({ name: "dashboard" });
             commit("loadingModule/showLoading", true, { root: true });
             buildSuccess("Bienvenido", commit, resolve);
             commit("login", data);

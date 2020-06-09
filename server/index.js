@@ -31,14 +31,6 @@ app.use(
   })
 );
 
-//session managment
-//initializing session
-// app.use(session({
-//     secret: 'ijegoierjgoiemrjgoiem',
-//     resave: false,
-//     saveUninitialized: false,
-//     // cookie: { secure: true }
-// }))
 mongoose.connect(
   process.env.DBSTRING,
   {

@@ -1,0 +1,14 @@
+.asistencia {
+    color: green;
+    font-weight: bold;
+}
+
+.falta {
+    color: red;
+    font-weight: bold;
+}
+
+.tardanza {
+    color: darkorange;
+    font-weight: bold;
+}
