@@ -44,9 +44,9 @@
         <v-list-item :to="{ name: 'personalization' }">
           <v-list-item-title>Ajustes</v-list-item-title>
         </v-list-item>
-        <v-list-item :to="{ name: 'suscription' }">
+        <!-- <v-list-item :to="{ name: 'suscription' }">
           <v-list-item-title>Suscripción</v-list-item-title>
-        </v-list-item>
+        </v-list-item> -->
       </v-list>
     </v-menu>
   </v-app-bar>

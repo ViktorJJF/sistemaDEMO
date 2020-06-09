@@ -74,6 +74,17 @@
                                     itemText="name"
                                     itemValue="_id"
                                   />
+                                  <b class="center">
+                                    Rol de usuario:
+                                  </b>
+                                  <VSelectWithValidation
+                                    :dark="true"
+                                    backgroundColor="primary"
+                                    rules=""
+                                    :items="roles"
+                                    v-model="editedItem.role"
+                                    label="Selecciona un rol"
+                                  />
                                 </v-container>
                               </v-col>
                               <v-col cols="12" sm="8">
@@ -304,13 +315,6 @@ export default {
         class: "customHeader",
       },
       {
-        text: "Perfil",
-        align: "left",
-        sortable: false,
-        value: "profile_picture",
-        class: "customHeader",
-      },
-      {
         text: "Nombres",
         align: "left",
         sortable: true,
@@ -345,12 +349,6 @@ export default {
         value: "address",
       },
       {
-        text: "País",
-        align: "left",
-        sortable: false,
-        value: "country",
-      },
-      {
         text: "Ciudad",
         align: "left",
         sortable: false,
@@ -366,8 +364,8 @@ export default {
     ],
     // members: [],
     editedIndex: -1,
-    editedItem: {},
-    defaultItem: {},
+    editedItem: { role: "USER" },
+    defaultItem: { role: "USER" },
   }),
   computed: {
     formTitle() {
@@ -375,6 +373,9 @@ export default {
     },
     ranks() {
       return this.$store.state.ranks;
+    },
+    roles() {
+      return this.$store.state.roles;
     },
     countries() {
       return this.$store.state.countries;

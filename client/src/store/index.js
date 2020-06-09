@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
       drawerIcon: null,
     },
     //new data
+    roles: ["USER", "ADMIN", "SUPERADMIN"],
     ranks: [
       {
         id: 2,

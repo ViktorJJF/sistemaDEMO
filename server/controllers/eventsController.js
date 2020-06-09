@@ -30,6 +30,7 @@ const list = (req, res) => {
 };
 const create = (req, res) => {
   let body = req.body;
+  // body.datetime = new Date(2020, 5, 9, 20);
   let event = new Event(body);
   event.save((err, payload) => {
     if (err) {

@@ -13,7 +13,7 @@
     </v-list>
     <v-divider class="mx-3 mb-3"></v-divider>
     <v-list nav flat>
-      <template v-for="(item, i) in items">
+      <template v-for="(item, i) in filteredItems">
         <v-list-item
           @click="selectItem(i)"
           :style="
@@ -156,6 +156,17 @@ export default {
     },
     email() {
       return "Logia Masonica Francisco de Paula Gonzales Vigil";
+    },
+    userRole() {
+      return this.$store.state.authModule.user
+        ? this.$store.state.authModule.user.role
+        : "";
+    },
+    filteredItems() {
+      return this.items.filter(
+        (item) => item.role === this.userRole || item.role === "USER"
+      );
+      // return this.items;
     },
   },
   methods: {

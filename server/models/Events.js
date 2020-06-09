@@ -13,7 +13,7 @@ let eventSchema = new Schema(
     },
     duration: {
       type: Number,
-      default: 2 * 60 * 60 * 1000,
+      default: 2.5 * 60 * 60 * 1000,
     },
     tolerance: {
       type: Number,

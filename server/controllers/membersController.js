@@ -68,6 +68,7 @@ const update = (req, res) => {
         });
       }
       //updating session
+      console.log("esto es passport: ", req.session);
       req.session.passport.user = payload;
       res.json({
         ok: true,
