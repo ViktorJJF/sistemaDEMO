@@ -2,7 +2,6 @@ const Event = require("../models/Events.js");
 const { startOfDay, endOfDay } = require("date-fns");
 const list = (req, res) => {
   let { from, to } = req.query;
-  console.log("llego esto: ", req.query);
   let conditions = {};
   if (from) conditions.from = from;
   if (to) conditions.to = to;
