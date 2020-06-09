@@ -64,11 +64,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function (user_id, done) {
-  done(null, user_id);
+  // done(null, user_id);
+  done(null, true);
 });
 
 passport.deserializeUser(function (user_id, done) {
-  done(null, user_id);
+  // done(null, user_id);
+  done(null, false);
 });
 
 const routes = require("./routes/api/api.js");
