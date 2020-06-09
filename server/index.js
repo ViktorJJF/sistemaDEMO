@@ -14,7 +14,6 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 //Middleware
-// app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(
@@ -67,26 +66,28 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function (req, res, next) {
-  var allowedOrigins = [
-    "https://localhost:8080",
-    "http://localhost:8080",
-    "http://192.168.8.158:8080",
-    "https://192.168.8.158:8080",
-  ];
-  var origin = req.headers.origin;
-  if (allowedOrigins.indexOf(origin) > -1) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-  // res.header("Access-Control-Allow-Origin", "https://localhost:8080");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
-  next();
-});
+app.use(cors());
+
+// app.use(function (req, res, next) {
+//   var allowedOrigins = [
+//     "https://localhost:8080",
+//     "http://localhost:8080",
+//     "http://192.168.8.158:8080",
+//     "https://192.168.8.158:8080",
+//   ];
+//   var origin = req.headers.origin;
+//   if (allowedOrigins.indexOf(origin) > -1) {
+//     res.setHeader("Access-Control-Allow-Origin", origin);
+//   }
+//   // res.header("Access-Control-Allow-Origin", "https://localhost:8080");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept"
+//   );
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
+//   next();
+// });
 
 passport.serializeUser(function (user_id, done) {
   console.log("llego esto prro en serialize: ", user_id);
