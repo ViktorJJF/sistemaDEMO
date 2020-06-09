@@ -63,10 +63,10 @@ app.use(
     }),
     resave: true,
     saveUninitialized: true,
-    cookie: {
-      domain: ".domain.com",
-      maxAge: 24 * 6 * 60 * 10000,
-    },
+    // cookie: {
+    //   domain: ".domain.com",
+    //   maxAge: 24 * 6 * 60 * 10000,
+    // },
     // vcookie: {
     //   httpOnly: true,
     //   maxAge: 2419200000,
