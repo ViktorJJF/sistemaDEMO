@@ -62,9 +62,9 @@ app.use(
       mongooseConnection: mongoose.connection,
     }),
     resave: true,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-      // domain: ".domain.com",
+      domain: ".domain.com",
       maxAge: 24 * 6 * 60 * 10000,
     },
     // vcookie: {
