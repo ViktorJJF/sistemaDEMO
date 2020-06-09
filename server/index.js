@@ -15,15 +15,6 @@ require("dotenv").config();
 
 //Middleware
 // app.use(cors());
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, authorization"
-  );
-  res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
-  next();
-});
 
 // parse application/x-www-form-urlencoded
 app.use(
@@ -63,10 +54,10 @@ app.use(
     }),
     resave: true,
     saveUninitialized: true,
-    // cookie: {
-    //   domain: ".domain.com",
-    //   maxAge: 24 * 6 * 60 * 10000,
-    // },
+    cookie: {
+      domain: ".domain.com",
+      maxAge: 24 * 6 * 60 * 10000,
+    },
     // vcookie: {
     //   httpOnly: true,
     //   maxAge: 2419200000,
@@ -75,6 +66,17 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
+  next();
+});
 
 passport.serializeUser(function (user_id, done) {
   console.log("llego esto prro en serialize: ", user_id);
