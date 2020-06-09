@@ -77,13 +77,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function (user_id, done) {
-  // done(null, user_id);
-  done(null, true);
+  done(null, user_id);
 });
 
 passport.deserializeUser(function (user_id, done) {
-  // done(null, user_id);
-  done(null, false);
+  done(null, user_id);
 });
 
 const routes = require("./routes/api/api.js");
